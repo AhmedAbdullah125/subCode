@@ -41,6 +41,7 @@ const Gallery = () => {
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -49,14 +50,23 @@ const Gallery = () => {
     const headers = {
       'Accept-Language': `${i18n.language}`, // Change language dynamically based on state
     };
-    axios.get(`${API_BASE_URL}/projects`
-      , {
-        headers: headers,
-      }).then(response => {
-        setData(response.data.data);  // Set the response data to state
-        setLoading(false);  // Set loading to false
+    axios.get(`${API_BASE_URL}/projects`, { headers: headers, }).then(response => {
+      setData(response.data.data);  // Set the response data to state
+      setLoading(false);  // Set loading to false
 
-      })
+    })
+      .catch(error => {
+        setError(error);  // Handle any errors
+        console.error('Error fetching data:', error);
+        setLoading(false)
+      });
+
+
+    axios.get(`${API_BASE_URL}/categories`, { headers: headers, }).then(response => {
+      setFilter(response.data.data);  // Set the response data to state
+      setLoading(false);  // Set loading to false
+
+    })
       .catch(error => {
         setError(error);  // Handle any errors
         console.error('Error fetching data:', error);
@@ -64,7 +74,6 @@ const Gallery = () => {
       });
 
   }, []);  // Run this effect whenever the `language` changes
-  console.log(data);
 
   const categories = useMemo(() => [
     { id: 'all', label: t('projects.categories.all') },
@@ -115,23 +124,40 @@ const Gallery = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="flex flex-wrap justify-center gap-3 md:gap-4 mb-16"
                 >
-                  {categories.map((category) => (
-                    <button
-                      key={category.id}
+                  <button
+                      
                       onClick={() => {
-                        setActiveTab(category.id);
+                        setActiveTab('all');
                         setVisibleProjects(columns === 3 ? 6 : columns === 2 ? 4 : 2);
                       }}
                       className={`
                 px-6 py-3 rounded-full font-medium transition-all duration-300
-                ${activeTab === category.id
+                ${activeTab === 'all'
                           ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg scale-105'
                           : `${isDarkMode ? 'bg-gray-800 text-gray-400' : 'bg-white text-gray-600'} 
                      hover:shadow-md hover:scale-105`
                         }
               `}
                     >
-                      {category.label}
+                      {t('projects.categories.all')}
+                    </button>
+                  {filter.map((singleCategory) => (
+                    <button
+                      key={singleCategory.id}
+                      onClick={() => {
+                        setActiveTab(singleCategory.id);
+                        setVisibleProjects(columns === 3 ? 6 : columns === 2 ? 4 : 2);
+                      }}
+                      className={`
+                px-6 py-3 rounded-full font-medium transition-all duration-300
+                ${activeTab === singleCategory.id
+                          ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg scale-105'
+                          : `${isDarkMode ? 'bg-gray-800 text-gray-400' : 'bg-white text-gray-600'} 
+                     hover:shadow-md hover:scale-105`
+                        }
+              `}
+                    >
+                      {singleCategory.name}
                     </button>
                   ))}
                 </motion.div>
@@ -163,26 +189,6 @@ const Gallery = () => {
                     </AnimatePresence>
                   </div>
                 </div>
-
-                {/* Load More Button */}
-                {/* {filteredProjects.length > visibleProjects && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center mt-16"
-          >
-            <button
-              onClick={handleLoadMore}
-              className="px-8 py-4 rounded-xl font-medium
-                bg-gradient-to-r from-blue-500 to-blue-600
-                text-white shadow-lg hover:scale-105
-                transition-all duration-300"
-            >
-              {currentLang === 'ar' ? 'عرض المزيد' : 'Load More'}
-            </button>
-          </motion.div>
-        )} */}
-
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback, memo, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../Context/ThemeContext';
-import { partners } from './Partenrs';
+// import { partners } from './Partenrs';
 
 const slideVariants = {
   enter: (direction) => ({
@@ -23,7 +23,8 @@ const slideVariants = {
   }),
 };
 
-function PartnersSlider() {
+function PartnersSlider({data}) {
+  console.log(data);
   const { t } = useTranslation();
   const { isDarkMode } = useTheme();
   const isRTL = document.documentElement.dir === 'rtl';
@@ -42,7 +43,7 @@ function PartnersSlider() {
   }, []);
 
   const [itemsPerView, setItemsPerView] = useState(getItemsPerView());
-  const totalSlides = Math.ceil(partners.length / itemsPerView);
+  const totalSlides = Math.ceil(data.partners.length / itemsPerView);
 
   const navigateSlide = useCallback((newDirection) => {
     const adjustedDirection = isRTL ? -newDirection : newDirection;
@@ -81,11 +82,11 @@ function PartnersSlider() {
 
   const getCurrentSlidePartners = useCallback(() => {
     const startIndex = currentIndex * itemsPerView;
-    return partners.slice(startIndex, startIndex + itemsPerView);
+    return data.partners.slice(startIndex, startIndex + itemsPerView);
   }, [currentIndex, itemsPerView]);
 
   useEffect(() => {
-    if (partners && partners.length > 0) {
+    if (data.partners && data.partners.length > 0) {
       setIsLoading(false);
     }
   }, []);
@@ -124,7 +125,7 @@ function PartnersSlider() {
         {t('ourPartners.title')}
       </h3>
 
-      <div className="relative mt flex justify-center items-center sm:left-0 sm:right-0 md:-left-5 md:-right-5 flex-col items-center lg:w-fit">
+      <div className="relative mt flex justify-center sm:left-0 sm:right-0 md:-left-5 md:-right-5 flex-col items-center lg:w-fit">
         <div className="relative flex justify-center items-center lg:justify-start w-full">
           <button
             onClick={() => navigateSlide(isRTL ? 1 : -1)}
@@ -167,9 +168,9 @@ function PartnersSlider() {
                       aria-label={`Visit ${partner.name}`}
                     >
                       <img
-                        src={partner.logo}
-                        alt={partner.name}
-                        className="xs:w-24 xs:h-18 sm:h-20 md:w-24 md:h-20 xl:h-24 object-contain transition-transform duration-300"
+                        src={partner}
+                        alt="subcode"
+                        className="xs:w-24 xs:h-18 sm:h-20 md:w-24 aspect-square object-cover md:h-20 xl:h-24 rounded-md transition-transform duration-300"
                         loading="lazy"
                       />
                     </a>

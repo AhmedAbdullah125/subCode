@@ -1,17 +1,19 @@
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ShieldCheck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../Context/ThemeContext';
 import BackgroundEffects from '../0-Background/BackgroundEffects';
 import HeroContent from './HeroContent';
+import { API_BASE_URL } from '../../../src/apiConfig';
+
+import axios from 'axios';
 
 function HeroSection() {
   const { t } = useTranslation();
   const { isDarkMode } = useTheme();
   const sectionRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
-
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"]
@@ -102,6 +104,38 @@ function HeroSection() {
     }
   };
 
+
+
+
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    setLoading(true);
+    // Fetch data from the API with Axios
+    const headers = {
+      'Accept-Language': `${i18n.language}`, // Change language dynamically based on state
+    };
+    axios.get(`${API_BASE_URL}/header`
+      , {
+        headers: headers,
+      }).then(response => {
+        setData(response.data.data);  // Set the response data to state
+        setLoading(false);  // Set loading to false
+
+      })
+      .catch(error => {
+        setError(error);  // Handle any errors
+        console.error('Error fetching data:', error);
+        setLoading(false)
+      });
+
+  }, []);  // Run this effect whenever the `language` changes
+  console.log(data);
+
+
   return (
     <section id='home' ref={sectionRef} className="h-full  md:h-screen w-full relative overflow-hidden">
       <BackgroundEffects  />
@@ -142,18 +176,11 @@ function HeroSection() {
               </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-4">
+            <div className="grid grid-cols-1 items-center md:grid-cols-2 gap-6 lg:gap-4">
               <motion.div className="order-1 md:order-2 relative">
-                <motion.div 
-                  variants={imageAnimation}
-                  initial="initial"
-                  animate={imageLoaded ? "animate" : "initial"}
-                  className="relative"
-                >
+                <div>
                   {/* corner decorations */}
-                  <motion.div 
-                    variants={cornerVariants}
-                    className={`
+                  <div className={`
                       absolute -top-3 -right-3 w-24 h-24
                       border-t-3 border-r-3
                       ${isDarkMode ? 'border-blue-500' : 'border-blue-500'}
@@ -161,9 +188,7 @@ function HeroSection() {
                     `}
                   />
                   
-                  <motion.div 
-                    variants={cornerVariants}
-                    className={`
+                  <div className={`
                       absolute -bottom-3 -left-3 w-24 h-24
                       border-b-3 border-l-3
                       ${isDarkMode ? 'border-blue-500' : 'border-blue-500'}
@@ -171,20 +196,17 @@ function HeroSection() {
                     `}
                   />
 
-                  <motion.div
-                    variants={subtleFloat}
-                    animate="animate"
-                    className="relative p-2 md:mt-12 md:p-2 lg:p-8 lg:mt-10 xl:p-14 aspect-w-16 2xl:aspect-h-16 2xl:p-6 2xl:m-16"
+                  <div className="relative p-2 md:mt-12 md:p-2  lg:mt-10  aspect-w-16 2xl:aspect-h-16 2xl:p-6 2xl:m-16"
                   >
                     <img
-                      src="/assets/her000.png"
+                      src={data.slider}
                       alt="Hero"
-                      className="w-full h-full object-cover object-center rounded-xl shadow-lg"
+                      className="w-full h-full  object-cover object-center rounded-xl shadow-lg"
                       loading="eager"
                       onLoad={() => setImageLoaded(true)}
                     />
-                  </motion.div>
-                </motion.div>
+                  </div>
+                </div>
               </motion.div>
 
               <motion.div 

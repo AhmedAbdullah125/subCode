@@ -20,7 +20,6 @@ import { API_BASE_URL } from '../../../src/apiConfig';
 
 const ProjectDetails = () => {
   const { id } = useParams();
-  console.log(id);
 
   const { i18n } = useTranslation();
   const { isDarkMode } = useTheme();
@@ -53,7 +52,6 @@ const ProjectDetails = () => {
       });
 
   }, []);  // Run this effect whenever the `language` changes
-  console.log(data);
 
   const project = data;
   if (!project) {

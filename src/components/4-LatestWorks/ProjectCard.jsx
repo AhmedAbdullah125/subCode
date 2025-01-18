@@ -27,7 +27,6 @@ const ProjectCard = ({
   tools, 
   currentLang 
 }) => {
-  console.log("ProjectCard", id, title, name, thumbnail, tools, currentLang)
   const { isDarkMode } = useTheme();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);

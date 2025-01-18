@@ -138,7 +138,6 @@ const Services = () => {
       });
 
   }, []);  // Run this effect whenever the `language` changes
-  console.log(data);
   return (
     <section className={`relative w-full py-10  ${i18n.language === 'ar' ? 'font-cairo' : 'font-cairo'
       }`}>

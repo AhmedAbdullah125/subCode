@@ -22,7 +22,9 @@
   --gradient-primary-light: linear-gradient(180deg, #93C5FD 0%, #60A5FA 50%, #3B82F6 100%);
   --gradient-glow-light: radial-gradient(circle, #3B82F6 10%, transparent 70%);
 }
-
+.flexed-p p{
+  display: inline;
+}
 [data-theme="dark"] {
   /* Dark Theme Colors */
   --primary-light: #60A5FA;
