@@ -95,7 +95,6 @@ const HeroContent = memo(function HeroContent( ) {
       });
 
   }, []);  // Run this effect whenever the `language` changes
-  console.log(data);
 
   return (
     <>
@@ -144,19 +143,11 @@ const HeroContent = memo(function HeroContent( ) {
                     variants={animations.item}
                     className="flex flex-row pt-3 gap-10 sm:pt-3 md:pt-0 my-10 font-semibold items-center justify-center md:justify-start md:gap-3"
                   >
-                    <motion.button onClick={scrollToContact} whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className={buttonStyles.primary}
-                    >
-                      <div className="flex items-center justify-center space-x-2 rtl:space-x-reverse">
+                    <motion.button className={buttonStyles.primary}>
+                      <Link to={`https://wa.me/${data.mobile || '+905528255694'}?text=${data.contactUsText}`} className="flex items-center justify-center space-x-2 rtl:space-x-reverse">
                         <span>{t('hero.buttons.start')}</span>
-                        <PhoneIncoming
-                          className={`
-                      w-4 h-4 transition-transform duration-300
-                      ${isRTL ? 'group-hover:-translate-x-2' : '-rotate-90 group-hover:translate-x-2'}
-                    `}
-                        />
-                      </div>
+                        <PhoneIncoming className={` w-4 h-4 transition-transform duration-300 ${isRTL ? 'group-hover:-translate-x-2' : '-rotate-90 group-hover:translate-x-2'}`}/>
+                      </Link>
                     </motion.button>
 
                     <Link to="/gallery">
@@ -174,7 +165,7 @@ const HeroContent = memo(function HeroContent( ) {
                     variants={animations.item}
                     className="cairo text-lg mx-4 mt-3 sm:mt-4 md:mt-3 lg:mt-5 xl:mt-6 2xl:mt-8"
                   >
-                    <PartnersSlider  data={data}/>
+                    <PartnersSlider data={data}/>
                   </motion.div>
                 </div>
               </motion.div>

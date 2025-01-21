@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, MapPin, Calendar, Quote } from 'lucide-react';
 import { useState } from 'react';
-
 const TestimonialCard = ({ testimonial, isDarkMode, isRTL }) => {
   const [showFullText, setShowFullText] = useState(false);
 
@@ -42,80 +41,48 @@ const TestimonialCard = ({ testimonial, isDarkMode, isRTL }) => {
 
       {/* Quote Icons */}
       <div className={`absolute top-6 ${isRTL ? 'right-6' : 'left-6'}`}>
-        <Quote 
-          size={32} 
+        <Quote
+          size={32}
           className={`opacity-20 ${isDarkMode ? 'text-blue-400' : 'text-blue-500'}`}
         />
       </div>
       <div className={`absolute bottom-20 ${isRTL ? 'left-6' : 'right-6'}`}>
-        <Quote 
-          size={32} 
+        <Quote
+          size={32}
           className={`opacity-20 rotate-180 ${isDarkMode ? 'text-blue-400' : 'text-blue-500'}`}
         />
       </div>
-
+      {/* all data in card  */}
       <div className="relative p-6 sm:p-8 h-full flex flex-col gap-2">
         {/* Header Section */}
         <div className={`flex items-start gap-4 sm:gap-6 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-          <motion.div 
+          <motion.div
             className="relative group shrink-0"
             whileHover={{ scale: 1.05 }}
           >
             <div className={`absolute inset-0 blur-xl rounded-2xl 
               ${isDarkMode ? 'bg-blue-500/30' : 'bg-blue-300/30'} 
-              group-hover:blur-2xl transition-all duration-300`} 
+              group-hover:blur-2xl transition-all duration-300`}
             />
-            <img
-              src={testimonial.image}
-              alt={testimonial.name}
-              className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-2xl object-cover shadow-lg
-                border-2 group-hover:border-4 transition-all duration-300
-                border-blue-500/30 hover:shadow-blue-500/20"
+            <img src={testimonial?.image || 'https://www.charlesrussellspeechlys.com/globalassets/configuration/fallback-images/fallback-image-person.jpg?width=512'} alt={testimonial?.name}
+              className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-2xl object-cover shadow-lg border-2 group-hover:border-4 transition-all duration-300 border-blue-500/30 hover:shadow-blue-500/20"
             />
           </motion.div>
-
+          {/* name AND position */}
           <div className={`flex flex-col gap-2 ${isRTL ? 'items-end text-right' : 'items-start text-left'}`}>
-            <h3 className={`text-xl sm:text-2xl font-bold 
-              ${isDarkMode ? 'text-white' : 'text-gray-800'}`}
-            >
+            <h3 className={`text-xl sm:text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'}`}>
               {testimonial.name}
             </h3>
             <p className={`text-sm font-medium ${isDarkMode ? 'text-blue-300' : 'text-blue-600'}`}>
-              {testimonial.role}
+              {testimonial.jobTitle}
             </p>
-            <motion.div 
-              className={`flex gap-1 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}
-              initial="hidden"
-              animate="visible"
-              variants={{
-                visible: { transition: { staggerChildren: 0.1 } }
-              }}
-            >
-              {[...Array(5)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  variants={{
-                    hidden: { scale: 0 },
-                    visible: { scale: 1 }
-                  }}
-                >
-                  <Star
-                    size={14}
-                    className={`transition-colors duration-200 ${
-                      i < testimonial.rating 
-                        ? 'fill-yellow-400 text-yellow-400' 
-                        : 'fill-gray-300 text-gray-300'
-                    }`}
-                  />
-                </motion.div>
-              ))}
-            </motion.div>
+
           </div>
         </div>
 
         {/* Quote Content */}
         <AnimatePresence mode="wait">
-          <motion.blockquote 
+          <motion.blockquote
             className="flex-grow relative px-8"
             variants={quoteVariants}
             initial="initial"
@@ -126,8 +93,8 @@ const TestimonialCard = ({ testimonial, isDarkMode, isRTL }) => {
               <p className={`text-base leading-relaxed text-justify
                 ${!showFullText ? 'line-clamp-3' : ''} 
                 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                {testimonial.text}
-                {!showFullText && testimonial.text.length > 150 && (
+                {testimonial.comment}
+                {!showFullText && testimonial.comment.length > 150 && (
                   <button
                     onClick={() => setShowFullText(true)}
                     className={`inline-block ${isRTL ? 'mr-1' : 'ml-1'} text-sm ${isDarkMode ? 'text-blue-400' : 'text-blue-600'} 
@@ -157,13 +124,13 @@ const TestimonialCard = ({ testimonial, isDarkMode, isRTL }) => {
           <div className={`flex items-center gap-1.5 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
             <MapPin size={14} className={isDarkMode ? 'text-blue-400' : 'text-blue-500'} />
             <span className={`text-xs sm:text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-              {testimonial.location}
+              {testimonial.country}
             </span>
           </div>
           <div className={`flex items-center gap-1.5 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
             <Calendar size={14} className={isDarkMode ? 'text-blue-400' : 'text-blue-500'} />
             <span className={`text-xs sm:text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-              {testimonial.date}
+              {testimonial.createdAt}
             </span>
           </div>
         </div>

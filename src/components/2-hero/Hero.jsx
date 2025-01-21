@@ -38,11 +38,11 @@ function HeroSection() {
 
   // Smooth image loading animation
   const imageAnimation = {
-    initial: { 
+    initial: {
       opacity: 0,
       y: 10,
     },
-    animate: { 
+    animate: {
       opacity: 1,
       y: 0,
       scale: 1,
@@ -71,11 +71,11 @@ function HeroSection() {
 
   //  corner decorations
   const cornerVariants = {
-    initial: { 
+    initial: {
       scale: 0.9,
-      opacity: 0 
+      opacity: 0
     },
-    animate: { 
+    animate: {
       scale: 1,
       opacity: 1,
       transition: {
@@ -89,11 +89,11 @@ function HeroSection() {
 
   //  badge animation
   const badgeAnimation = {
-    initial: { 
+    initial: {
       y: -30,
-      opacity: 0 
+      opacity: 0
     },
-    animate: { 
+    animate: {
       y: 0,
       opacity: 1,
       transition: {
@@ -133,27 +133,26 @@ function HeroSection() {
       });
 
   }, []);  // Run this effect whenever the `language` changes
-  console.log(data);
 
 
   return (
     <section id='home' ref={sectionRef} className="h-full  md:h-screen w-full relative overflow-hidden">
-      <BackgroundEffects  />
+      <BackgroundEffects />
 
-      <motion.div 
+      <motion.div
         style={{ scale, y }}
         className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24"
       >
         <div className="flex flex-col max-w-8xl mx-auto">
           <div className="flex flex-col ">
             {/* Badge */}
-            <motion.div 
+            <motion.div
               className="flex  justify-center w-full"
               variants={badgeAnimation}
               initial="initial"
               animate="animate"
             >
-              <div className="custom-badge xs:mb-6 sm:mb-8 xs:mb-7 md:mb-0 xs:mt-6 sm:mt-4 md:mt-0">
+              <div className="custom-badge sm:mb-8 xs:mb-7 md:mb-0 xs:mt-6 sm:mt-4 md:mt-0">
                 <div className={`
                   badge-content
                   inline-flex items-center gap-1.5 
@@ -187,7 +186,7 @@ function HeroSection() {
                       rounded-tr-3xl
                     `}
                   />
-                  
+
                   <div className={`
                       absolute -bottom-3 -left-3 w-24 h-24
                       border-b-3 border-l-3
@@ -198,18 +197,21 @@ function HeroSection() {
 
                   <div className="relative p-2 md:mt-12 md:p-2  lg:mt-10  aspect-w-16 2xl:aspect-h-16 2xl:p-6 2xl:m-16"
                   >
-                    <img
-                      src={data.slider}
-                      alt="Hero"
-                      className="w-full h-full  object-cover object-center rounded-xl shadow-lg"
-                      loading="eager"
-                      onLoad={() => setImageLoaded(true)}
-                    />
+                    {
+                      loading ? null :
+                        <img
+                          src={data.slider}
+                          alt="Hero"
+                          className="w-full h-full  object-cover object-center rounded-xl shadow-lg"
+                          loading="eager"
+                          onLoad={() => setImageLoaded(true)}
+                        />
+                    }
                   </div>
                 </div>
               </motion.div>
 
-              <motion.div 
+              <motion.div
                 className="order-2 md:order-1"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -222,7 +224,7 @@ function HeroSection() {
         </div>
       </motion.div>
     </section>
-    
+
   );
 }
 

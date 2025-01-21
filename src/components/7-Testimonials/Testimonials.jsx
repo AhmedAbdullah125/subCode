@@ -6,6 +6,9 @@ import { useTheme } from '../../Context/ThemeContext';
 import { testimonialsData } from './testimonialsdata';
 import TestimonialCard from './TestimonialCard';
 import CornerLights from '../0-Background/CornerLights';
+import axios from 'axios';
+import { API_BASE_URL } from '../../../src/apiConfig';
+
 
 const slideVariants = {
   enter: (direction) => ({
@@ -38,7 +41,27 @@ const Testimonials = () => {
     itemsPerView: typeof window !== 'undefined' ? (window.innerWidth < 640 ? 1 : 2) : 2,
     isAnimating: false
   });
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    setLoading(true);
+    // Fetch data from the API with Axios
+
+    axios.get(`${API_BASE_URL}/testsmoinal`).then(response => {
+      setData(response.data.data);  // Set the response data to state
+      setLoading(false);  // Set loading to false
+
+    })
+      .catch(error => {
+        setError(error);  // Handle any errors
+        console.error('Error fetching data:', error);
+        setLoading(false)
+      });
+
+  }, []);  // Run this effect whenever the `language` changes
+  console.log(data);
   const totalPages = Math.ceil(testimonialsData.length / state.itemsPerView);
 
   const getCurrentTestimonials = useCallback(() => {
@@ -57,9 +80,9 @@ const Testimonials = () => {
 
   const handleSlideChange = useCallback((direction) => {
     if (state.isAnimating) return;
-    
+
     const adjustedDirection = isRTL ? -direction : direction;
-    
+
     setState(prev => ({
       ...prev,
       isAnimating: true,
@@ -75,14 +98,14 @@ const Testimonials = () => {
   const handleDragEnd = (event, info) => {
     const offset = info.offset.x;
     const dragThreshold = 50;
-    
+
     if (Math.abs(offset) > dragThreshold) {
       const direction = offset > 0 ? -1 : 1;
       handleSlideChange(direction);
     }
   };
 
-  
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -91,7 +114,7 @@ const Testimonials = () => {
         itemsPerView: window.innerWidth < 640 ? 1 : 2
       }));
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -107,7 +130,7 @@ const Testimonials = () => {
         [direction > 0 ? 'right' : 'left']: '0rem'
       }}
     >
-      {isRTL ? 
+      {isRTL ?
         (direction > 0 ? <ChevronRight className="w-6 h-6" /> : <ChevronLeft className="w-6 h-6" />) :
         (direction > 0 ? <ChevronRight className="w-6 h-6" /> : <ChevronLeft className="w-6 h-6" />)
       }
@@ -116,92 +139,97 @@ const Testimonials = () => {
 
   return (
     <section className={`py-10 relative cairo overflow-hidden ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
-        <div className="absolute inset-0 opacity-50 w-full h-full" style={{ contain: 'layout paint size', willChange: 'transform' }}>
-          <CornerLights />
-        </div>
-  
-      <div className="container mx-auto px-4 relative">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className={`text-3xl font-bold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
-            {t('testimonials.title')}
-          </h2>
-          <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: '4rem' }}
-            transition={{ duration: 0.6 }}
-            className="h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto rounded-full mb-4"
-          />
-           <p className={`mt-4 text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-            {t('testimonials.description')}
-          </p>
-        </motion.div>
+      {
+        loading ? null :
+          <>
+            <div className="absolute inset-0 opacity-50 w-full h-full" style={{ contain: 'layout paint size', willChange: 'transform' }}>
+              <CornerLights />
+            </div>
 
-        <div className="relative" ref={containerRef}>
-          {renderNavigationButton(-1)}
-          
-          <motion.div
-            drag="x"
-            dragConstraints={containerRef}
-            dragElastic={0.1}
-            onDragEnd={handleDragEnd}
-            style={{ x: dragX }}
-            className="touch-pan-y"
-          >
-            <AnimatePresence initial={false} custom={state.direction} mode="wait">
+            <div className="container mx-auto px-4 relative">
               <motion.div
-                key={state.currentIndex}
-                custom={state.direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: "spring", stiffness: 2000, damping: 200 },
-                  opacity: { duration: 0.1 },
-                }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-3 px-4"
-                dir={isRTL ? 'rtl' : 'ltr'}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mb-12"
               >
-                {getCurrentTestimonials().map((testimonial) => (
-                  <TestimonialCard
-                    key={testimonial.id}
-                    testimonial={testimonial}
-                    isDarkMode={isDarkMode}
-                  />
-                ))}
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
-
-          {renderNavigationButton(1)}
-          
-          <div className="flex justify-center items-center gap-1 mt-10">
-            {[...Array(totalPages)].map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  const direction = index > state.currentIndex ? 1 : -1;
-                  handleSlideChange(direction);
-                }}
-                className="relative h-2 transition-all duration-200"
-                style={{ width: state.currentIndex === index ? '2rem' : '0.65rem' }}
-              >
-                <div
-                  className={`absolute inset-0 rounded-full ${state.currentIndex === index 
-                    ? 'bg-gradient-to-r from-blue-500 to-blue-700' 
-                    : `${isDarkMode ? 'bg-gray-700' : 'bg-gray-300'}`}
-                  `}
+                <h2 className={`text-3xl font-bold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+                  {t('testimonials.title')}
+                </h2>
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: '4rem' }}
+                  transition={{ duration: 0.6 }}
+                  className="h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto rounded-full mb-4"
                 />
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+                <p className={`mt-4 text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                  {t('testimonials.description')}
+                </p>
+              </motion.div>
+
+              <div className="relative" ref={containerRef}>
+                {renderNavigationButton(-1)}
+
+                <motion.div
+                  drag="x"
+                  dragConstraints={containerRef}
+                  dragElastic={0.1}
+                  onDragEnd={handleDragEnd}
+                  style={{ x: dragX }}
+                  className="touch-pan-y"
+                >
+                  <AnimatePresence initial={false} custom={state.direction} mode="wait">
+                    <motion.div
+                      key={state.currentIndex}
+                      custom={state.direction}
+                      variants={slideVariants}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{
+                        x: { type: "spring", stiffness: 2000, damping: 200 },
+                        opacity: { duration: 0.1 },
+                      }}
+                      className="grid grid-cols-1 md:grid-cols-2 gap-3 px-4"
+                      dir={isRTL ? 'rtl' : 'ltr'}
+                    >
+                      {data.map((testimonial) => (
+                        <TestimonialCard
+                          key={testimonial.id}
+                          testimonial={testimonial}
+                          isDarkMode={isDarkMode}
+                        />
+                      ))}
+                    </motion.div>
+                  </AnimatePresence>
+                </motion.div>
+
+                {renderNavigationButton(1)}
+
+                <div className="flex justify-center items-center gap-1 mt-10">
+                  {[...Array(totalPages)].map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        const direction = index > state.currentIndex ? 1 : -1;
+                        handleSlideChange(direction);
+                      }}
+                      className="relative h-2 transition-all duration-200"
+                      style={{ width: state.currentIndex === index ? '2rem' : '0.65rem' }}
+                    >
+                      <div
+                        className={`absolute inset-0 rounded-full ${state.currentIndex === index
+                          ? 'bg-gradient-to-r from-blue-500 to-blue-700'
+                          : `${isDarkMode ? 'bg-gray-700' : 'bg-gray-300'}`}
+                `}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </>
+      }
     </section>
   );
 };

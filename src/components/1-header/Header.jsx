@@ -23,48 +23,7 @@ import { useTheme } from "../../Context/ThemeContext";
 
 const MENU_ITEMS = [
   { name: "home", href: "#home" },
-  {
-    name: "services",
-    href: "#services",
-    subItems: [
-      {
-        name: "web",
-        href: "/services/web",
-        icon: <Laptop className="w-4 h-4" />,
-      },
-      {
-        name: "mobile",
-        href: "/services/mobile",
-        icon: <Smartphone className="w-4 h-4" />,
-      },
-      {
-        name: "custom",
-        href: "/services/custom",
-        icon: <Settings className="w-4 h-4" />,
-      },
-      { name: "ai", href: "/services/ai", icon: <Brain className="w-4 h-4" /> },
-      {
-        name: "ui",
-        href: "/services/ui",
-        icon: <Palette className="w-4 h-4" />,
-      },
-      {
-        name: "marketing",
-        href: "/services/marketing",
-        icon: <TrendingUp className="w-4 h-4" />,
-      },
-      {
-        name: "management",
-        href: "website-management",
-        icon: <FolderCog className="w-4 h-4" />,
-      },
-      {
-        name: "viewAll",
-        href: "/all-services",
-        icon: <Grid className="w-4 h-4" />,
-      },
-    ],
-  },
+  { name: "services", href: "/services/web" },
   { name: "gallery", href: "/Gallery" },
   { name: "blog", href: "/blog" },
   { name: "about", href: "#about" },
@@ -377,10 +336,7 @@ const renderMenuItem = (item, isMobile = false) => {
       key={item.name}
       className="relative group w-full"
     >
-      <Link
-        to={item.href}
-        onClick={(e) => {
-          if (item.subItems) {
+      <Link to={item.href} onClick={(e) => { if (item.subItems) {
             handleSubmenuToggle(item.name, e);
           } else {
             handleNavigation(item.href, e);
