@@ -1,204 +1,220 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import PropTypes from "prop-types";
-import { BrainCircuit, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import * as Icons from "lucide-react";
+import { footerConfig } from "../../config/footerConfig";
+import { useFooterNavigation } from "../../hooks/useFooterNavigation";
+import { useTheme } from "../../Context/ThemeContext";
+import SocialLinks from "../shared/SocialLinks";
+import ScrollToTop from "./ScrollToTop";
 
 export default function Footer() {
   const { t, i18n } = useTranslation();
+  const { handleLinkClick } = useFooterNavigation();
+  const { isDarkMode } = useTheme();
   const language = i18n.language;
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { quickLinksColumn1, quickLinksColumn2 } = footerConfig;
 
-  const quickLinks = [
-    { title: t("footer.links.home"), href: "#home" },
-    { title: t("footer.links.projects"), href: "#latestworks" },
-    { title: t("footer.links.about"), href: "#about" },
-    { title: t("footer.links.allservices"), href: "/all-services" },
-  ];
+  const animations = {
+    container: {
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: { 
+          staggerChildren: 0.1,
+          delayChildren: 0.2,
+          duration: 0.6,
+          ease: "easeOut"
+        }
+      }
+    },
+    item: {
+      hidden: { opacity: 0, y: 20 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.5, ease: "easeOut" }
+      }
+    }
+  };
 
-  const GradientSquare = ({
-    id,
-    position,
-    rotation,
-    gradientClasses,
-    hoverShadowClasses,
-    overlayGradient,
-  }) => (
-    <div
-      className={`absolute ${position} w-[70vw] h-[40vw] transition-all duration-700 ease-in-out`}
-    >
-      <div
-        className={`w-full h-full rounded-3xl ${rotation} transition-all duration-500 ${gradientClasses} blur-3xl animate-pulse-slow ${
-          hoveredSquare === id ? `scale-105 ${hoverShadowClasses}` : ""
-        }`}
-      />
-      <div
-        className={`absolute inset-0 ${overlayGradient} rounded-3xl rotate-45 mix-blend-overlay`}
-      />
-    </div>
+  const renderQuickLinks = (column, columnIndex) => (
+    <ul key={columnIndex} className="space-y-3">
+      {column?.map((link, index) => {
+        const Icon = Icons[link.icon];
+        return (
+          <motion.li 
+            key={index}
+            whileHover={{ 
+              x: language === "ar" ? -5 : 5,
+              transition: { type: "spring", stiffness: 300 }
+            }}
+          >
+            <a
+              href={link.href}
+              onClick={(e) => handleLinkClick(link.href, e)}
+              className={`group cursor-pointer flex items-center justify-center gap-2
+                ${isDarkMode ? 'text-white/90 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}
+                transition-all duration-300 hover:scale-105`}
+            >
+              {Icon && <Icon className="w-4 h-4" />}
+              <span className="mx-2">{t(link.title)}</span>
+            </a>
+          </motion.li>
+        );
+      })}
+    </ul>
   );
 
-  GradientSquare.propTypes = {
-    id: PropTypes.number.isRequired,
-    position: PropTypes.string.isRequired,
-    rotation: PropTypes.string.isRequired,
-    gradientClasses: PropTypes.string.isRequired,
-    hoverShadowClasses: PropTypes.string.isRequired,
-    overlayGradient: PropTypes.string.isRequired,
+  const renderTerms = () => {
+    const terms = t("footer.terms", { returnObjects: true });
+    return Array.isArray(terms) ? terms.map((item, index) => (
+      <motion.a
+        key={index}
+        href="#"
+        whileHover={{ scale: 1.05 }}
+        className={`text-md cursor-pointer ${
+          isDarkMode 
+            ? 'text-white/90 hover:text-blue-400' 
+            : 'text-gray-600 hover:text-blue-600'
+        } transition-all duration-300`}
+      >
+        {item}
+      </motion.a>
+    )) : null;
   };
-
-  const [hoveredSquare, setHoveredSquare] = useState(null);
-
-  const handleLinkClick = (href, e) => {
-    e.preventDefault();
-    const headerHeight = document.querySelector("header").offsetHeight;
-
-    if (href.startsWith("#")) {
-      if (location.pathname === "/") {
-        const element = document.querySelector(href);
-        if (element) {
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition =
-            elementPosition + window.pageYOffset - headerHeight;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth",
-          });
-        }
-      } else {
-        // Store scroll target and navigate to home
-        sessionStorage.setItem("scrollTarget", href);
-        sessionStorage.setItem("headerHeight", headerHeight.toString());
-        navigate("/");
-      }
-    } else {
-      // For non-anchor links (like /all-services)
-      navigate(href);
-      window.scrollTo(0, 0);
-    }
-  };
-
-  useEffect(() => {
-    const scrollTarget = sessionStorage.getItem("scrollTarget");
-    const headerHeight = parseInt(sessionStorage.getItem("headerHeight"), 10);
-
-    if (scrollTarget && location.pathname === "/") {
-      setTimeout(() => {
-        const element = document.querySelector(scrollTarget);
-        if (element) {
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition =
-            elementPosition + window.pageYOffset - headerHeight;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth",
-          });
-        }
-        sessionStorage.removeItem("scrollTarget");
-        sessionStorage.removeItem("headerHeight");
-      }, 100);
-    }
-  }, [location.pathname]);
 
   return (
-    <footer
-      className="relative overflow-hidden bg-gray-950 pt-16"
+    <footer 
+      className={`relative overflow-hidden pt-16 ${
+        isDarkMode ? 'bg-gray-900/95 backdrop-blur-sm' : 'bg-white/95 backdrop-blur-sm'
+      }`} 
       dir={language === "ar" ? "rtl" : "ltr"}
     >
-      {/* Decorative Background Effects */}
-      <div className="absolute inset-0 " />
-
-      {/* الخلفية الديناميكية */}
-   
-
-      <div className="container mx-auto px-4 cairo relative">
-        <div className="grid grid-cols-1 text-center md:grid-cols-2 lg:grid-cols-3 gap-12 pb-12">
-          {/* Brand Section */}
-          <div className="space-y-6">
-            <div className="flex row justify-center items-center gap-3">
-              <div className="px-2 py-1.5 rounded-xl bg-gradient-to-br from-emerald-500 to-yellow-500">
-                <BrainCircuit className="w-6 h-6 leading-relaxed text-white" />
+      <AnimatePresence>
+        <motion.div 
+          className="container mx-auto px-4 cairo relative"
+          variants={animations.container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "50px" }}
+        >
+          <div className="grid grid-cols-1 text-center md:grid-cols-2 lg:grid-cols-3 gap-12 pb-12">
+            {/* Brand Section */}
+            <motion.div 
+              variants={animations.item}
+              className="transform hover:scale-105 transition-all duration-300"
+            >
+              <div className="flex row justify-center items-center gap-3">
+                <motion.img 
+                  src="/assets/logo.png" 
+                  alt="Logo" 
+                  className="w-40 h-20 object-contain"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                />
               </div>
-              <span
-                className={` font-poppins  text-2xl font-semibold text-white `}
+              <p className={`leading-relaxed mt-4 ${
+                isDarkMode ? 'text-white/90' : 'text-gray-600'
+              }`}>
+                {t("footer.description")}
+              </p>
+            </motion.div>
+
+            {/* Quick Links Section */}
+            <motion.div 
+              variants={animations.item}
+              className="space-y-4"
+            >
+              <motion.h4 
+                className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600"
+                whileHover={{ scale: 1.05 }}
               >
-                {t("footer.brand")}
-              </span>
-            </div>
-            <p className="text-white leading-relaxed">
-              {t("footer.description")}
-            </p>
-          </div>
+                {t("footer.quickLinksTitle")}
+              </motion.h4>
+              <div className="grid grid-cols-2 gap-4">
+                {[quickLinksColumn1, quickLinksColumn2].map((column, index) => 
+                  renderQuickLinks(column, index)
+                )}
+              </div>
+            </motion.div>
 
-          {/* Quick Links */}
-          <div className="space-y-4 flex flex-col  items-center">
-            <h4 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-yellow-400">
-              {t("footer.quickLinksTitle")}
-            </h4>
-            <ul className="space-y-3  ">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => handleLinkClick(link.href, e)}
-                    className="group cursor-pointer flex items-center  justify-center text-white hover:text-emerald-400 transition-colors duration-300"
-                  >
-                    <span className="mx-2">{link.title}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Newsletter Section */}
-          <div className="space-y-6">
-            <h4 className="text-xl  font-semibold text-center  text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-yellow-400">
-              {t("footer.newsletterTitle")}
-            </h4>
-            <p className="  text-center text-white">
-              {t("footer.newsletterDescription")}
-            </p>
-            <div className="flex">
-              <input
-                type="email"
-                placeholder={t("footer.emailPlaceholder")}
-                className="flex-1 px-4 lg:px-6 sm:px-4 py-2 bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-s-lg text-white focus:outline-none  "
-              />
-              <button className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-yellow-500 rounded-e-lg hover:opacity-90 transition-all duration-300">
-                <ExternalLink className="h-5 w-5 text-white" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer Bottom */}
-        <div className="border-t border-gray-800/50 py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4  ">
-          <div className="flex items-center 2xl:gap-10 lg:gap-8 md:gap-4  gap-3 " >
-              {t("footer.terms", { returnObjects: true }).map((item, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="text-md  cursor-pointer text-white hover:text-emerald-400 transition-colors duration-300"
+            {/* Newsletter Section */}
+            <motion.div 
+              variants={animations.item}
+              className="space-y-6"
+            >
+              <motion.h4 
+                className="text-xl font-semibold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600"
+                whileHover={{ scale: 1.05 }}
+              >
+                {t("footer.newsletterTitle")}
+              </motion.h4>
+              <p className={`text-center ${
+                isDarkMode ? 'text-white/90' : 'text-gray-600'
+              }`}>
+                {t("footer.newsletterDescription")}
+              </p>
+              <motion.div 
+                className="flex group"
+                whileHover={{ scale: 1.02 }}
+              >
+                <input
+                  type="email"
+                  placeholder={t("footer.emailPlaceholder")}
+                  className={`flex-1 px-4 lg:px-6 sm:px-4 py-2 backdrop-blur-xl border rounded-s-lg 
+                    focus:outline-none focus:ring-1 focus:ring-blue-500 
+                    ${isDarkMode 
+                      ? 'bg-gray-800/50 border-gray-700/50 text-white' 
+                      : 'bg-gray-100/50 border-gray-200 text-gray-900'
+                    } transition-all duration-300`}
+                />
+                <motion.button 
+                  className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-e-lg 
+                    hover:opacity-90 transition-all duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  {item}
-                </a>
-              ))}
-            </div>
-            <p className="text-white  text-md flex items-center gap-1">
-              © {new Date().getFullYear()}{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-yellow-400 font-semibold">
-                {t("footer.brand")}
-              </span>{" "}
-              {t("footer.madeWith")}{" "}
-            </p>
-           
+                  <ExternalLink className="h-5 w-5 text-white" />
+                </motion.button>
+              </motion.div>
+              <SocialLinks />
+            </motion.div>
           </div>
-        </div>
-      </div>
+
+          <motion.div 
+            variants={animations.item}
+            className="relative flex justify-center -mb-6 z-10"
+          >
+            <ScrollToTop />
+          </motion.div>
+
+          <motion.div
+            variants={animations.item}
+            className={`border-t py-8 ${
+              isDarkMode ? 'border-gray-800/50' : 'border-gray-200'
+            }`}
+          >
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="flex flex-wrap items-center justify-center 2xl:gap-10 lg:gap-8 md:gap-4 gap-3">
+                {renderTerms()}
+              </div>
+              <motion.p 
+                variants={animations.item}
+                className={`text-md flex items-center gap-1 ${
+                  isDarkMode ? 'text-white/90' : 'text-gray-600'
+                }`}
+              >
+                © {new Date().getFullYear()}{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 font-semibold">
+                  {t("footer.brand")}
+                </span>{" "}
+                {t("footer.madeWith")}
+              </motion.p>
+            </div>
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
     </footer>
   );
 }

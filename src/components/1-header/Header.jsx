@@ -23,7 +23,48 @@ import { useTheme } from "../../Context/ThemeContext";
 
 const MENU_ITEMS = [
   { name: "home", href: "#home" },
-  { name: "services", href: "/services/web" },
+  {
+    name: "services",
+    href: "#services",
+    subItems: [
+      {
+        name: "web",
+        href: "",
+        icon: <Laptop className="w-4 h-4" />,
+      },
+      {
+        name: "mobile",
+        href: "",
+        icon: <Smartphone className="w-4 h-4" />,
+      },
+      {
+        name: "custom",
+        href: "",
+        icon: <Settings className="w-4 h-4" />,
+      },
+      { name: "ai", href: "/services/ai", icon: <Brain className="w-4 h-4" /> },
+      {
+        name: "ui",
+        href: "",
+        icon: <Palette className="w-4 h-4" />,
+      },
+      {
+        name: "marketing",
+        href: "",
+        icon: <TrendingUp className="w-4 h-4" />,
+      },
+      {
+        name: "management",
+        href: "",
+        icon: <FolderCog className="w-4 h-4" />,
+      },
+      {
+        name: "viewAll",
+        href: "/all-services",
+        icon: <Grid className="w-4 h-4" />,
+      },
+    ],
+  },
   { name: "gallery", href: "/Gallery" },
   { name: "blog", href: "/blog" },
   { name: "about", href: "#about" },
@@ -59,25 +100,26 @@ export function Header() {
       window.scrollTo(0, 0);
     }
   }, [location.pathname]);
-
-const shouldShowTransparentHeader = useCallback(() => {
-  const nonTransparentPaths = [
-    '/blog', 
-    '/Gallery', 
-    '/all-services', 
-    '/services/web', 
-    '/services/mobile', 
-    '/services/custom', 
-    '/services/ui', 
-    '/services/ai', 
-    '/services/marketing', 
-    '/services/website-management',
-  ];
-
-  // تحقق مما إذا كان المسار يتضمن /project/ أو يبدأ بها
-  return !nonTransparentPaths.includes(location.pathname) && !location.pathname.startsWith('/project/');
-}, [location.pathname]);
-
+  const shouldShowTransparentHeader = useCallback(() => {
+    const nonTransparentPaths = [
+      '/blog',
+      '/blog/', // Add trailing slash version
+      '/blog/*', // This will match all blog detail pages
+      '/Gallery', 
+      '/all-services', 
+      '/services/web', 
+      '/services/mobile', 
+      '/services/custom', 
+      '/services/ui', 
+      '/services/ai', 
+      '/services/marketing', 
+      '/services/website-management',
+    ];
+  
+    return !nonTransparentPaths.some(path => 
+      window.location.pathname.startsWith(path)
+    );
+  }, []);
   // Optimized scroll handler
   const handleScroll = useCallback(() => {
     if (scrollTimeoutRef.current) {
@@ -247,7 +289,6 @@ const shouldShowTransparentHeader = useCallback(() => {
     const newLang = i18n.language === "ar" ? "en" : "ar";
     i18n.changeLanguage(newLang);
     document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
-    window.location.reload();
   };
 
   // Menu handlers
@@ -336,7 +377,10 @@ const renderMenuItem = (item, isMobile = false) => {
       key={item.name}
       className="relative group w-full"
     >
-      <Link to={item.href} onClick={(e) => { if (item.subItems) {
+      <Link
+        to={item.href}
+        onClick={(e) => {
+          if (item.subItems) {
             handleSubmenuToggle(item.name, e);
           } else {
             handleNavigation(item.href, e);

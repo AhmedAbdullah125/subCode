@@ -15,7 +15,7 @@ import {
   CallToAction
 } from './Sections';
 import axios from 'axios';
-import { API_BASE_URL } from '../../../src/apiConfig';
+import { API_BASE_URL } from '../../apiConfig';
 
 
 const ProjectDetails = () => {

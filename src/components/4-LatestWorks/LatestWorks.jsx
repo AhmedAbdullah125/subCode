@@ -1,146 +1,121 @@
-import { motion } from 'framer-motion';
+import { memo, useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../Context/ThemeContext';
 import ProjectCard from './ProjectCard';
-import { projects } from './projectsData';
-import { useEffect, useState } from 'react';
-import { API_BASE_URL } from '../../../src/apiConfig';
 import axios from 'axios';
+import { API_BASE_URL } from '../../apiConfig';
+import { useNavigate } from 'react-router-dom';
 
 const LatestWorks = () => {
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { isDarkMode } = useTheme();
   const currentLang = i18n.language;
-
-
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-    // Fetch data from the API with Axios
-    const headers = {
-      'Accept-Language': `${i18n.language}`, // Change language dynamically based on state
+    const fetchProjects = async () => {
+      try {
+        const { data } = await axios.get(`${API_BASE_URL}/projects`, {
+          headers: { 'Accept-Language': i18n.language }
+        });
+        setProjects(data.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+        setIsLoading(false);
+      }
     };
-    axios.get(`${API_BASE_URL}/projects`
-      , {
-        headers: headers,
-      }).then(response => {
-        setData(response.data.data);  // Set the response data to state
-        setLoading(false);  // Set loading to false
 
-      })
-      .catch(error => {
-        setError(error);  // Handle any errors
-        console.error('Error fetching data:', error);
-        setLoading(false)
-      });
+    fetchProjects();
+  }, [i18n.language]);
 
-  }, []);  // Run this effect whenever the `language` changes
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <motion.div 
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className="rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
+        />
+      </div>
+    );
+  }
 
   return (
-    <>
-      {
-        loading ? "loading..." :
-          <section
-            id="latestworks"
-            className={`relative  cairo py-8 overflow-hidden ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}
+    <section className={`relative w-full py-10 ${currentLang === 'ar' ? 'font-cairo' : 'font-cairo'}`}>
+      <div className="relative container mx-auto px-4 mt-2 z-20">
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
           >
-            {/* Background Effects */}
-            <div className="absolute inset-0">
-              <div
-                className={`absolute inset-0 bg-gradient-to-br  ${isDarkMode
-                  ? 'bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 opacity-50'
-                  : 'bg-gradient-to-br from-gray-50 via-white to-gray-50 opacity-70'}
-          `}
-              />
-            </div>
+            <h2 className={`text-3xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
+              {t('works.title')}
+            </h2>
+            
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: '4rem' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto rounded-full mb-4"
+            />
 
-            <div className="relative container mx-auto px-4">
-              <div className="text-center mb-8">
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className={`text-3xl font-bold mb-3 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
-                >
-                  {t('works.title')}
-                </motion.h2>
+            <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} text-lg max-w-2xl mx-auto`}>
+              {t('works.subtitle')}
+            </p>
+          </motion.div>
+        </AnimatePresence>
 
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: '4rem' }}
-                  transition={{ duration: 0.6 }}
-                  className="h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto rounded-full mb-4"
-                />
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, staggerChildren: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+            >
+              <ProjectCard {...project} currentLang={currentLang} />
+            </motion.div>
+          ))}
+        </motion.div>
 
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                    } text-lg mb-8 max-w-2xl mx-auto`}
-                >
-                  {t('works.subtitle')}
-                </motion.p>
-              </div>
-
-              {/* Projects Grid */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10"
-              >
-                {data.slice(0, 6).map((project, index) => (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  >
-                    <ProjectCard {...project} currentLang={currentLang} />
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              {/* View More Button */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <motion.a
-                  href="/Gallery"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`
-              inline-flex items-center gap-2
-              px-4 py-2 rounded-xl
-              font-medium text-white
-              bg-gradient-to-r from-blue-500 to-blue-600
-              hover:from-blue-600 hover:to-blue-700
-              shadow-lg hover:shadow-blue-500/25
-              transition-all duration-300
-            `}
-                >
-                  <span className="text-lg">
-                    {t('works.viewMore')}
-                  </span>
-                  <ExternalLink className="w-5 h-5" />
-                </motion.a>
-              </motion.div>
-            </div>
-          </section>
-      }
-    </>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-12 text-center"
+        >
+          <motion.button
+            onClick={() => navigate('/Gallery')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-700 
+              text-white rounded-lg transition-all duration-300"
+          >
+            <span className="text-lg font-medium">{t('works.viewMore')}</span>
+            <ExternalLink size={18} />
+          </motion.button>
+        </motion.div>
+      </div>
+    </section>
   );
 };
 
-export default LatestWorks;
+export default memo(LatestWorks);

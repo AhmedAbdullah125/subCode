@@ -52,68 +52,45 @@ export const en = {
     },
 
     services: {
-      title: "Our Services",
+          "title": "Our Services",
+          "allServices": "All Services",
+          "exploreDescription": "Discover our complete collection of premium services designed specifically to meet your needs",
+          "viewDetails": "View Details",
+          "featured": "Featured Services",
+          "noResults": "No results found",
+          "loading": "Loading...",
+          "error": "Error loading services",      
       subtitle:
         "We offer a comprehensive range of technical services to meet your business needs",
+    
+      viewAll: { title: "View All Services" },
+      viewAllServices: "Explore Services",
       web: {
         title: "Web Development",
-        desc: "Design and development of professional responsive websites",
       },
       mobile: {
-        title: "Mobile App Development",
-        desc: "Development of high-performance iOS and Android applications",
+        title: "Mobile Apps",
+      },
+      design: {
+        title: "Design",
       },
       custom: {
-        title: "Custom Programming",
-        desc: "Custom software solutions to meet your business needs",
-      },
-      ai: {
-        title: "Artificial Intelligence",
-        desc: "Smart solutions to improve and automate your business processes",
+        title: "Custom Software",
       },
       ui: {
-        title: "UI/UX Design",
-        desc: "Modern designs focused on user experience",
+        title: "UI/UX",
+      },
+      ai: {
+        title: "AI Services",
       },
       marketing: {
         title: "Digital Marketing",
-        desc: "Effective strategies to boost your online presence",
       },
       management: {
         title: "Website Management",
-        desc: "Managing and maintaining your website for optimal performance",
       },
-      viewAll: { title: "View All Services" },
-      viewAllServices: "Explore Services",
     },
-
-    heroTitle: "Comprehensive Tech Services for Your Business Growth",
-    heroDescription:
-      "We offer innovative solutions that contribute to your success in the ever-evolving digital world.",
-    contactUs: "Contact Us",
-    servicesTitle: "Our Services",
-    learnMore: "Learn More",
-    webDevTitle: "Web Development",
-    webDevDescription:
-      "We provide integrated website development solutions that reflect your company's identity and meet your needs.",
-    mobileDevTitle: "Mobile App Development",
-    mobileDevDescription:
-      "Innovative and user-friendly mobile apps that deliver the best user experience.",
-    customDevTitle: "Custom Development",
-    customDevDescription:
-      "We offer customized software solutions tailored to your business requirements.",
-    aiTitle: "Artificial Intelligence",
-    aiDescription:
-      "We use AI technologies to enhance your business performance and achieve superior results.",
-    brandingTitle: "Brand Identity Design",
-    brandingDescription:
-      "We help you create a distinctive visual identity that reflects your company's values and vision.",
-    marketingTitle: "Digital Marketing",
-    marketingDescription:
-      "Comprehensive digital marketing strategies to effectively reach your target audience.",
-    maintenanceTitle: "Website Management & Maintenance",
-    maintenanceDescription:
-      "We provide website maintenance services to ensure continuous performance without issues.",
+   
 
     works: {
       title: "Latest Works",
@@ -142,26 +119,33 @@ export const en = {
         label4: "star",
       },
     },
-    contact: {
-      title: "Contact Us",
-      description:
-        "We have a dedicated team that communicates with you to help you achieve your business goals. We are here to assist you, contact us and we will respond as soon as possible.",
-      subtitle: "get in touch ",
-      location: "Mansoura-Daqahlia-Egypt",
-      location2: "ّIstanbul - Turkey",
-      name: "Name",
-      email: "Email address",
-      message: "Your Message",
-      sendMessage: "Send Message",
-      namePlaceholder: "Enter your name ..",
-      emailPlaceholder: "Enter your email ..",
-      phone: "Phone",
-      phonePlaceholder: "Enter your phone number ..",
-      subject: "Subject",
-      subjectPlaceholder: "Enter the subject ..",
-      details: "Details",
-      detailsPlaceholder: "Enter the details ..",
-    },
+ "contact": {
+    "title": "Contact Us",
+    "description": "We're here to help. Contact us anytime and we'll get back to you as soon as possible",
+    "available24/7": "Available 24/7",
+    "quickResponse": "Response within 24h",
+    "location": " mansoura, egypt",
+    "location2": " turkey, istanbul",
+    "visitUs": "Visit us anytime",
+    "namePlaceholder": "Full Name",
+    "emailPlaceholder": "Email Address",
+    "phonePlaceholder": "Phone Number",
+    "subjectPlaceholder": "Subject",
+    "detailsPlaceholder": "Message Details",
+    "sendMessage": "Send Message",
+    "sending": "Sending...",
+    "successMessage": "Message sent successfully",
+    "errorMessage": "Error sending message",
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameInvalid": "Please enter a valid name",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email",
+      "phoneRequired": "Phone number is required",
+      "phoneInvalid": "Please enter a valid phone number",
+      "messageRequired": "Message is required"
+    }
+  },
 
     testimonials: {
       title: "Our Clients Love Us",
@@ -288,12 +272,17 @@ export const en = {
     },
 
     footer: {
-      links: {
-        home: "Home",
-        services: "Services",
-        projects: "Projects",
-        about: "About",
-        allservices: "All Services",
+      "links": {
+        "home": "Home",
+        "projects": "Projects",
+        "about": "About Us",
+        "services": "Services",
+        "blog": "Blog",
+        "team": "Our Team",
+        "contact": "Contact",
+        "careers": "Careers",
+        "support": "Support",
+      "testimonials": "Testimonials",
       },
       brand: "SubCode",
       description:

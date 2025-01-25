@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../Context/ThemeContext';
 import BackgroundEffects from '../0-Background/BackgroundEffects';
 import HeroContent from './HeroContent';
-import { API_BASE_URL } from '../../../src/apiConfig';
+import { API_BASE_URL } from '../../apiConfig';
 
 import axios from 'axios';
 
@@ -141,7 +141,7 @@ function HeroSection() {
 
       <motion.div
         style={{ scale, y }}
-        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24"
+        className="relative z-10 container mt-6   mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24"
       >
         <div className="flex flex-col max-w-8xl mx-auto">
           <div className="flex flex-col ">
@@ -152,7 +152,7 @@ function HeroSection() {
               initial="initial"
               animate="animate"
             >
-              <div className="custom-badge sm:mb-8 xs:mb-7 md:mb-0 xs:mt-6 sm:mt-4 md:mt-0">
+              <div className="custom-badge   mb-4 sm:mb-6  lg:mb-4  xs:mt-6 sm:mt-4 md:mt-0">
                 <div className={`
                   badge-content
                   inline-flex items-center gap-1.5 

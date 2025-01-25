@@ -126,7 +126,7 @@ function PartnersSlider({data}) {
 
       <div className="relative mt flex justify-center sm:left-0 sm:right-0 md:-left-5 md:-right-5 flex-col items-center lg:w-fit">
         <div className="relative flex justify-center items-center lg:justify-start w-full">
-          <button
+          {/* <button
             onClick={() => navigateSlide(isRTL ? 1 : -1)}
             className={`w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-200 shadow-lg
               ${isDarkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'}`}
@@ -135,7 +135,7 @@ function PartnersSlider({data}) {
           >
             {isRTL ? <ChevronRight className={`w-6 h-6 ${isDarkMode ? 'text-white' : 'text-gray-800'}`} /> 
                    : <ChevronLeft className={`w-6 h-6 ${isDarkMode ? 'text-white' : 'text-gray-800'}`} />}
-          </button>
+          </button> */}
 
           <div 
             className="flex mt-6 items-center justify-center touch-pan-y"
@@ -179,7 +179,7 @@ function PartnersSlider({data}) {
             </AnimatePresence>
           </div>
 
-          <button
+          {/* <button
             onClick={() => navigateSlide(isRTL ? -1 : 1)}
             className={`w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-200 shadow-lg
               ${isDarkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'}`}
@@ -188,7 +188,7 @@ function PartnersSlider({data}) {
           >
             {isRTL ? <ChevronLeft className={`w-6 h-6 ${isDarkMode ? 'text-white' : 'text-gray-800'}`} />
                    : <ChevronRight className={`w-6 h-6 ${isDarkMode ? 'text-white' : 'text-gray-800'}`} />}
-          </button>
+          </button> */}
         </div>
 
         <div className="flex justify-center mt-3 mb-6 sm:mb-10 md:mb-14 xl:mb-18 gap-1">

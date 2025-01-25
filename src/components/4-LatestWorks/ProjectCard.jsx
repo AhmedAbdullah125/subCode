@@ -1,16 +1,16 @@
 import { Eye } from 'lucide-react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { useTheme } from '../../Context/ThemeContext';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const LoadingSkeleton = () => (
-  <div className="animate-pulse">
+  <div className="animate-pulse space-y-4">
     <div className="h-[240px] bg-gray-300 dark:bg-gray-700 rounded-t-xl" />
     <div className="p-6">
       <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mx-auto mb-4" />
-      <div className="space-y-2">
+      <div className="space-y-3">
         <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-5/6 mx-auto" />
         <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-4/6 mx-auto" />
       </div>
@@ -19,7 +19,6 @@ const LoadingSkeleton = () => (
 );
 
 const ProjectCard = ({ 
-  id, 
   title, 
   slug,
   name, 
@@ -27,33 +26,61 @@ const ProjectCard = ({
   tools, 
   currentLang 
 }) => {
+  const navigate = useNavigate();
   const { isDarkMode } = useTheme();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  
-  const displayTitle =  title ;
-  const displayDescription =  name ;
   const isArabic = currentLang === 'ar';
 
+  const handleCardClick = () => {
+    navigate(`/project/${slug}`);
+  };
+
   useEffect(() => {
-    const preloadImage = new Image();
-    preloadImage.src = thumbnail;
-    preloadImage.onload = () => setImageLoaded(true);
+    const img = new Image();
+    img.src = thumbnail;
+    img.onload = () => setImageLoaded(true);
+    return () => {
+      img.onload = null;
+    };
   }, [thumbnail]);
 
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-    hover: { y: -8, transition: { duration: 0.3 } }
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5 }
+    },
+    hover: { 
+      y: -8,
+      transition: { duration: 0.3, ease: "easeOut" }
+    }
   };
 
   const imageVariants = {
-    hover: { scale: 1.1, transition: { duration: 0.5 } },
-    initial: { scale: 1 }
+    initial: { scale: 1 },
+    hover: { 
+      scale: 1.1,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
+
+  const toolsVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
   };
 
   return (
-    <motion.section 
+    <motion.article 
+      onClick={handleCardClick}
       variants={cardVariants}
       initial="hidden"
       animate="visible"
@@ -62,63 +89,71 @@ const ProjectCard = ({
       onHoverEnd={() => setIsHovered(false)}
       className={`
         relative h-[480px] w-full
-        rounded-xl overflow-hidden
+        rounded-2xl overflow-hidden
         ${isDarkMode ? 'bg-gray-900/95' : 'bg-white/95'}
         backdrop-blur-sm
         shadow-lg hover:shadow-2xl
         transition-all duration-500
-        border border-transparent
+        border-2 cursor-pointer
         ${isHovered 
           ? isDarkMode 
-            ? 'border-blue-500/50' 
-            : 'border-blue-400/50'
+            ? 'border-blue-500/50 shadow-blue-500/20' 
+            : 'border-blue-400/50 shadow-blue-400/20'
           : isDarkMode 
             ? 'border-white/10' 
             : 'border-gray-200'
         }
       `}
     >
-      {!imageLoaded && <LoadingSkeleton />}
+      <AnimatePresence>
+        {!imageLoaded && <LoadingSkeleton />}
+      </AnimatePresence>
 
       <div className="relative h-[240px] w-full overflow-hidden">
         <motion.img
           variants={imageVariants}
           src={thumbnail}
-          alt={displayTitle}
+          alt={title}
           className={`
             object-cover w-full h-full
-            transition-opacity duration-500
+            transition-opacity duration-700
             ${imageLoaded ? 'opacity-100' : 'opacity-0'}
           `}
         />
         
         <motion.div 
           animate={{ opacity: isHovered ? 1 : 0 }}
-          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"
+          transition={{ duration: 0.3 }}
+          className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"
         />
 
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
+          variants={toolsVariants}
+          initial="hidden"
+          animate={isHovered ? "visible" : "hidden"}
           className="absolute bottom-4 left-0 right-0 px-4"
         >
           <div className="flex flex-wrap gap-2 justify-center">
-            {tools.map((item,index) => (
-              <span
+            {tools.map((tool, index) => (
+              <motion.span
                 key={index}
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0 }
+                }}
                 className={`
                   px-4 py-1.5 rounded-full
                   text-sm font-medium
                   backdrop-blur-md border
-                  transition-all duration-300
+                  transition-colors duration-300
                   ${isDarkMode
                     ? 'bg-black/50 text-blue-300 border-blue-500/30'
                     : 'bg-white/50 text-blue-600 border-blue-200'
                   }
                 `}
               >
-                {item}
-              </span>
+                {tool}
+              </motion.span>
             ))}
           </div>
         </motion.div>
@@ -128,33 +163,39 @@ const ProjectCard = ({
         <motion.h3 
           className={`
             text-2xl font-bold mb-4
-            ${isHovered ? 'text-transparent bg-clip-text' : ''}
+            ${isHovered ? 'text-blue-500' : ''}
             ${isDarkMode ? 'text-white' : 'text-gray-900'}
+            transition-colors duration-300
           `}
         >
-          {displayTitle}
+          {title}
         </motion.h3>
         
         <p className={`
           mb-6 line-clamp-3 text-base mx-auto max-w-[90%]
           ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}
         `}>
-          {displayDescription}
+          {name}
         </p>
 
         <div className="mt-auto flex justify-center">
-          <Link
-            to={`/project/${slug}`}
+          <motion.button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleCardClick();
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className={`
               group
-              inline-flex items-center gap-1
-              px-4 py-2 rounded-xl
+              inline-flex items-center gap-2
+              px-6 py-2.5 rounded-xl
               font-medium text-white
-              transition-all duration-500
+              transition-all duration-300
               bg-gradient-to-r from-blue-500 to-blue-600
               hover:from-blue-600 hover:to-blue-700
-              transform hover:scale-105
               shadow-lg hover:shadow-blue-500/25
+              z-10
             `}
           >
             <span className="text-base">
@@ -168,22 +209,20 @@ const ProjectCard = ({
                   : 'group-hover:translate-x-1'
                 }`}
             />
-          </Link>
+          </motion.button>
         </div>
       </div>
-    </motion.section>
+    </motion.article>
   );
 };
 
-// ProjectCard.propTypes = {
-//   id: PropTypes.string.isRequired,
-//   title: PropTypes.string.isRequired,
-//   titleEn: PropTypes.string.isRequired,
-//   description: PropTypes.string.isRequired,
-//   descriptionEn: PropTypes.string.isRequired,
-//   image: PropTypes.string.isRequired,
-//   tech: PropTypes.arrayOf(PropTypes.string).isRequired,
-//   currentLang: PropTypes.string.isRequired
-// };
+ProjectCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  tools: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currentLang: PropTypes.string.isRequired
+};
 
 export default ProjectCard;

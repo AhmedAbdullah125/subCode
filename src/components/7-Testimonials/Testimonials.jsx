@@ -7,8 +7,13 @@ import { testimonialsData } from './testimonialsdata';
 import TestimonialCard from './TestimonialCard';
 import CornerLights from '../0-Background/CornerLights';
 import axios from 'axios';
+// import { API_BASE_URL } from '../../../src/apiConfig';
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import { API_BASE_URL } from '../../../src/apiConfig';
-
 
 const slideVariants = {
   enter: (direction) => ({
@@ -167,66 +172,51 @@ const Testimonials = () => {
                 </p>
               </motion.div>
 
-              <div className="relative" ref={containerRef}>
-                {renderNavigationButton(-1)}
 
-                <motion.div
-                  drag="x"
-                  dragConstraints={containerRef}
-                  dragElastic={0.1}
-                  onDragEnd={handleDragEnd}
-                  style={{ x: dragX }}
-                  className="touch-pan-y"
-                >
-                  <AnimatePresence initial={false} custom={state.direction} mode="wait">
-                    <motion.div
-                      key={state.currentIndex}
-                      custom={state.direction}
-                      variants={slideVariants}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={{
-                        x: { type: "spring", stiffness: 2000, damping: 200 },
-                        opacity: { duration: 0.1 },
-                      }}
-                      className="grid grid-cols-1 md:grid-cols-2 gap-3 px-4"
-                      dir={isRTL ? 'rtl' : 'ltr'}
-                    >
-                      {data.map((testimonial) => (
-                        <TestimonialCard
-                          key={testimonial.id}
-                          testimonial={testimonial}
-                          isDarkMode={isDarkMode}
-                        />
-                      ))}
-                    </motion.div>
-                  </AnimatePresence>
-                </motion.div>
+              <Swiper
+                // navigation
+                // pagination={{ type: "bullets", clickable: true }}
+                spaceBetween={12}
+                slidesPerView={7.5}
+                autoplay={true}
+                loop={true}
+                modules={[Autoplay, Navigation, Pagination]}
+                breakpoints={{
+                  1400: {
+                    slidesPerView: 2,
+                  },
+                  1100: {
+                    slidesPerView: 2,
+                  },
+                  767: {
+                    slidesPerView: 1,
+                  },
+                  768: {
+                    slidesPerView: 1,
+                    autoplay: false,
+                  },
+                  640: {
+                    slidesPerView: 1,
+                    autoplay: false,
+                  },
+                  100: {
+                    slidesPerView: 1,
+                    autoplay: false,
+                  },
+                }}
+              >
+                {data?.map((testimonial) =>
+                  <SwiperSlide key={testimonial.id}>
+                    <TestimonialCard
+                      key={testimonial.id}
+                      testimonial={testimonial}
+                      isDarkMode={isDarkMode}
+                    />
+                  </SwiperSlide>
+                )}
+              </Swiper>
 
-                {renderNavigationButton(1)}
-
-                <div className="flex justify-center items-center gap-1 mt-10">
-                  {[...Array(totalPages)].map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        const direction = index > state.currentIndex ? 1 : -1;
-                        handleSlideChange(direction);
-                      }}
-                      className="relative h-2 transition-all duration-200"
-                      style={{ width: state.currentIndex === index ? '2rem' : '0.65rem' }}
-                    >
-                      <div
-                        className={`absolute inset-0 rounded-full ${state.currentIndex === index
-                          ? 'bg-gradient-to-r from-blue-500 to-blue-700'
-                          : `${isDarkMode ? 'bg-gray-700' : 'bg-gray-300'}`}
-                `}
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
+            
             </div>
           </>
       }

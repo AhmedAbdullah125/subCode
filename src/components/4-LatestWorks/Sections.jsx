@@ -32,8 +32,8 @@ export const HeroSection = ({ project, currentLang, isDarkMode }) => (
         className="w-full h-full object-cover filter blur-sm scale-105"
       />
       <div className={`absolute inset-0 ${isDarkMode
-          ? 'bg-gradient-to-b from-gray-900/95 via-gray-900/90 to-gray-900/95'
-          : 'bg-gradient-to-b from-white/95 via-white/90 to-gray-50/95'
+        ? 'bg-gradient-to-b from-gray-900/95 via-gray-900/90 to-gray-900/95'
+        : 'bg-gradient-to-b from-white/95 via-white/90 to-gray-50/95'
         }`} />
     </div>
 
@@ -208,31 +208,31 @@ NavigationTabs.propTypes = {
 
 
 export const OverviewSection = ({ project, currentLang, isDarkMode }) => (
-  <div className="grid md:grid-cols-2 gap-12">
-    {/* Left Column */}
-    <div className="space-y-8">
-      <div className="prose dark:prose-invert max-w-none">
-        <h2 className="text-3xl font-bold mb-6">
-          {currentLang === 'ar' ? 'نظرة عامة' : 'Overview'}
-        </h2>
-        <p className="text-lg leading-relaxed">
-          {parse(project.description)}
-        </p>
-      </div>
+  <div className="d">
+    <div className="grid md:grid-cols-2 gap-12 mb-7">
+      {/* Left Column */}
+      <div className="space-y-8">
+        <div className="prose dark:prose-invert max-w-none">
+          <h2 className="text-3xl font-bold mb-6">
+            {currentLang === 'ar' ? 'نظرة عامة' : 'Overview'}
+          </h2>
+          <p className="text-lg leading-relaxed" onClick={() => { console.log(project) }}>
+            {parse(project.description)}
+          </p>
+        </div>
 
-      <div className="grid grid-cols-2 gap-6">
-        {project.overview.map((feature, index) => (
-          <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-            {/* <Clock className="w-8 h-8 text-blue-500 mb-4" /> */}
-            <h3 className="font-semibold mb-2">
-              {feature.overviewSectionTitle}
-            </h3>
-            <p>{feature.overviewSectionNumber}</p>
-          </div>
-        ))}
-      </div>
+        <div className="grid grid-cols-2 gap-6">
+          {project.overview.map((feature, index) => (
+            <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+              <h3 className="font-semibold mb-2">
+                {feature.overviewSectionTitle}
+              </h3>
+              <p>{feature.overviewSectionNumber}</p>
+            </div>
+          ))}
+        </div>
 
-      {/* <div className="grid grid-cols-2 gap-6">
+        {/* <div className="grid grid-cols-2 gap-6">
         <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
           <div className="text-2xl font-bold text-blue-500 mb-2">
             {project.statistics.users}
@@ -252,54 +252,43 @@ export const OverviewSection = ({ project, currentLang, isDarkMode }) => (
         </div>
       </div> */}
 
-      {/* Client Deliverables Section */}
-      <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <Package className="w-5 h-5 text-blue-500" />
-          {currentLang === 'ar' ? 'ما تم تسليمه للعميل' : 'Client Deliverables'}
-        </h3>
-        <div className="space-y-4">
-          {project.deliverCustomer?.map((deliverable, index) => (
-            <div key={index} className="flex items-start gap-3 p-4 bg-blue-500/10 rounded-lg">
-              {parse(deliverable.text)}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+        {/* Client Deliverables Section */}
 
-    {/* Right Column */}
-    <div className="space-y-8">
-      {/* Project Architecture */}
-      <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <Database className="w-5 h-5 text-blue-500" />
-          {currentLang === 'ar' ? 'الهيكل التقني' : 'Technical Architecture'}
-        </h3>
-        <div className="space-y-4">
-          {project.architecture?.map((layer, index) => (
-            <motion.div
-              key={index}
-              className="relative p-4 border-2 border-dashed border-blue-500 rounded-lg"
-            >
-              <span className="absolute -top-3 left-4 bg-white dark:bg-gray-800 px-2 text-sm font-medium">
-                {currentLang === 'ar' ? layer.titleAr : layer.titleEn}
-              </span>
-              <div className="flex flex-wrap gap-3">
-                {layer.technologies.map((tech, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-sm">
-                    <img src={tech.icon} className="w-5 h-5" alt={tech.name} />
-                    {tech.name}
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </div>
 
-      {/* Performance Metrics */}
-      <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+      {/* Right Column */}
+      <div className="space-y-8">
+        {/* Project Architecture */}
+        <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+          <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+            <Database className="w-5 h-5 text-blue-500" />
+            {currentLang === 'ar' ? 'الهيكل التقني' : 'Technical Architecture'}
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {project.tools?.map((layer, index) => (
+              // <motion.div
+              //   key={index}
+              //   className="relative p-4 border-2 border-dashed border-blue-500 rounded-lg"
+              // >
+              //   <span className="absolute -top-3 left-4 bg-white dark:bg-gray-800 px-2 text-sm font-medium">
+              //     {layer}
+              //   </span>
+              //   <div className="flex flex-wrap gap-3">
+              //     {layer.technologies.map((tech, idx) => (
+              //       <div key={idx} className="flex items-center gap-2 text-sm">
+              //         <img src={tech.icon} className="w-5 h-5" alt={tech.name} />
+              //         {layer}
+              //       </div>
+              //     ))}
+              //   </div>
+              // </motion.div>
+              <span className='p-2 bg-blue-500/10 rounded-md'>{layer}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Performance Metrics */}
+        {/* <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
         <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
           <LineChart className="w-5 h-5 text-green-500" />
           {currentLang === 'ar' ? 'مؤشرات الأداء' : 'Performance Metrics'}
@@ -319,10 +308,10 @@ export const OverviewSection = ({ project, currentLang, isDarkMode }) => (
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
 
-      {/* Testing & Quality Assurance */}
-      <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+        {/* Testing & Quality Assurance */}
+        {/* <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
         <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
           <CheckCircle className="w-5 h-5 text-teal-500" />
           {currentLang === 'ar' ? 'اختبار وضمان الجودة' : 'Testing & QA'}
@@ -347,10 +336,10 @@ export const OverviewSection = ({ project, currentLang, isDarkMode }) => (
             </motion.div>
           ))}
         </div>
-      </div>
+      </div> */}
 
-      {/* Security Features */}
-      <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+        {/* Security Features */}
+        {/* <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
         <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
           <Shield className="w-5 h-5 text-purple-500" />
           {currentLang === 'ar' ? 'ميزات الأمان' : 'Security Features'}
@@ -373,8 +362,22 @@ export const OverviewSection = ({ project, currentLang, isDarkMode }) => (
             </motion.div>
           ))}
         </div>
+      </div> */}
       </div>
     </div>
+      <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+          <Package className="w-5 h-5 text-blue-500" />
+          {currentLang === 'ar' ? 'ما تم تسليمه للعميل' : 'Client Deliverables'}
+        </h3>
+        <div className="space-y-4">
+          {project.deliverCustomer?.map((deliverable, index) => (
+            <div key={index} className="flex items-start gap-3 p-4 bg-blue-500/10 rounded-lg">
+              {parse(deliverable.text)}
+            </div>
+          ))}
+        </div>
+      </div>
   </div>
 );
 
@@ -479,7 +482,7 @@ export const TechnicalSection = ({ project, currentLang, isDarkMode }) => (
           {currentLang === 'ar' ? 'التقنيات المستخدمة' : 'Technologies Used'}
         </h3>
         <div className="flex flex-wrap gap-2">
-          {project.tools.map((tech, index) => ( <span key={index} className="px-3 py-1 rounded-full text-sm bg-blue-500/10 text-blue-500" > {tech} </span>))}
+          {project.tools.map((tech, index) => (<span key={index} className="px-3 py-1 rounded-full text-sm bg-blue-500/10 text-blue-500" > {tech} </span>))}
         </div>
       </div>
 
@@ -489,7 +492,7 @@ export const TechnicalSection = ({ project, currentLang, isDarkMode }) => (
           {currentLang === 'ar' ? 'الفئة المستهدفة' : 'Target Audience'}
         </h3>
         <ul className="space-y-2">
-          { project.detailsDevelopment.map((item, index) => (
+          {project.detailsDevelopment.map((item, index) => (
             <li key={index} className="flex items-center gap-2"> <span className="w-2 h-2 rounded-full bg-purple-500" /> {item.text} </li>
           ))}
         </ul>

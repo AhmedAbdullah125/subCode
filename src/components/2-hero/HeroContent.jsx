@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import PartnersSlider from './PartnersSlider';
 import { useTheme } from '../../Context/ThemeContext';
-import { API_BASE_URL } from '../../../src/apiConfig';
+import { API_BASE_URL } from '../../apiConfig';
 import axios from 'axios';
 import parse from 'html-react-parser';
 
