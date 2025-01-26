@@ -12,7 +12,6 @@ import parse from 'html-react-parser';
 
 const BlogDetail = () => {
   const { slug } = useParams();
-  console.log(slug);
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
   const { t, i18n } = useTranslation();
@@ -74,7 +73,6 @@ const BlogDetail = () => {
     fetchProjects();
   }, [i18n.language]);
 
-  console.log(article);
 
 
 

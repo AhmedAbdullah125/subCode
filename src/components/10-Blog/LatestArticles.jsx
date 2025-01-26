@@ -64,8 +64,6 @@ const LatestArticles = () => {
     fetchProjects();
   }, [i18n.language]);
 
-  console.log(blogs);
-
   return (
     <section id="latestarticles" className={`relative cairo py-16 overflow-hidden ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
       {/* Background Gradient */}

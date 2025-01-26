@@ -24,7 +24,6 @@ const slideVariants = {
 };
 
 function PartnersSlider({data}) {
-  console.log(data);
   const { t } = useTranslation();
   const { isDarkMode } = useTheme();
   const isRTL = document.documentElement.dir === 'rtl';

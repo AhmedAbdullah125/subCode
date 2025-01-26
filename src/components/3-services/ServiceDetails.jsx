@@ -85,7 +85,6 @@ const ServiceDetails = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const { id } = useParams();
-  console.log(id);
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -106,7 +105,6 @@ const ServiceDetails = () => {
     fetchProjects();
   }, [i18n.language]);
 
-  console.log(data);
 
 
 
@@ -124,7 +122,7 @@ const ServiceDetails = () => {
         loading ? "loading..." :
           <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
             {/* Banner Slider */}
-            <div className="relative h-[80vh] overflow-hidden">
+            <div className="relative h-screen overflow-hidden">
 
               <Swiper
                 // navigation
@@ -202,7 +200,7 @@ const ServiceDetails = () => {
 
               <div className="grid lg:grid-cols-2 gap-12">
                 <div className="space-y-8">
-                  <div className="grid sm:grid-cols-2 gap-6">
+                  <div className="grid sm:grid-cols-3 gap-6">
                     {data.features.map((feature, index) => (
                       <motion.div
                         key={index}
@@ -211,7 +209,7 @@ const ServiceDetails = () => {
                         transition={{ delay: index * 0.1 }}
                         className="p-6 rounded-xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow"
                       >
-                        <img src={feature.image} className="text-3xl mb-4"/>
+                        <img src={feature.image} className="text-3xl mb-4 w-20 h-20 m-auto rounded-xl"/>
                         <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
                         <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
                       </motion.div>

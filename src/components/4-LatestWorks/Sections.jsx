@@ -216,7 +216,7 @@ export const OverviewSection = ({ project, currentLang, isDarkMode }) => (
           <h2 className="text-3xl font-bold mb-6">
             {currentLang === 'ar' ? 'نظرة عامة' : 'Overview'}
           </h2>
-          <p className="text-lg leading-relaxed" onClick={() => { console.log(project) }}>
+          <p className="text-lg leading-relaxed">
             {parse(project.description)}
           </p>
         </div>

@@ -66,7 +66,6 @@ const Testimonials = () => {
       });
 
   }, []);  // Run this effect whenever the `language` changes
-  console.log(data);
   const totalPages = Math.ceil(testimonialsData.length / state.itemsPerView);
 
   const getCurrentTestimonials = useCallback(() => {
