@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, Eye, Bookmark, ThumbsUp, Twitter, Facebook } from 'lucide-react';
+import { Clock, Eye } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../Context/ThemeContext';
 import { useTranslation } from 'react-i18next';
@@ -179,7 +179,7 @@ const BlogDetail = () => {
                 >
                   <h2 className='text-3xl font-bold mb-6'>{article.title}</h2>
                   <div className={`prose prose-lg max-w-none ${isDarkMode ? 'prose-invert' : ''}`}>
-                    {parse(article.description)}
+                    {article.description)}
                   </div>
 
                   <div className="flex flex-wrap gap-2 mt-8">
