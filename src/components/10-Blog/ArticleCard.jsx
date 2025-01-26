@@ -18,9 +18,9 @@ const ArticleCard = ({ title, description, image, slug, tags, isLoading }) => {
         overflow-hidden group hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300  w-full h-[400px]`}>
       {/* Glass Effect Background */}
       <div className={` absolute inset-0  ${isDarkMode ? 'bg-gray-900/20' : 'bg-white/20'}  backdrop-blur-sm z-0`} />
-      <div className="relative z-10 h-full flex flex-col rounded-xl bg-gray-900/95 border border-gray-800/50">
+      <div className={`relative z-10 h-full flex flex-col rounded-xl ${isDarkMode ? 'bg-gray-900/90' : 'bg-white/95'} border border-gray-800/50`}>
         {/* Image Container */}
-        <div className="relative mb-4 overflow-hidden rounded-xl bg-gray-900/95 ">
+        <div className="relative mb-4 overflow-hidden rounded-xl">
           <div className="relative aspect-[16/9]">
             <img src={image} alt={title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" loading="lazy" />
           </div>
@@ -51,10 +51,10 @@ const ArticleCard = ({ title, description, image, slug, tags, isLoading }) => {
           )}
           {/* Read More Button */}
           <div className="mt-auto">
-            <span className={` inline-flex items-center gap-1.5 text-sm font-medium ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}group-hover:gap-3 transition-all duration-300`}>
+            <p className={` inline-flex items-center gap-1.5 text-sm font-medium ${isDarkMode ? 'text-white' : 'text-blue-500'} group-hover:gap-3 transition-all duration-300`}>
               {t('readMore')}
               <ArrowRight className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
-            </span>
+            </p>
           </div>
         </div>
       </div>
