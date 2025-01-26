@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 import { motion } from 'framer-motion';
-import {  useNavigate } from 'react-router-dom';
+import {  Link, useNavigate } from 'react-router-dom';
 import { Eye } from 'lucide-react';
 import parse from 'html-react-parser';
 import PropTypes from 'prop-types';
@@ -46,12 +46,7 @@ const ServiceCard = ({ service, isDarkMode, isLoading }) => {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      onClick={handleCardClick}
+    <Link to={`/services/${service.slug}`}
       className={`
         relative rounded-xl backdrop-blur-lg border cursor-pointer
         ${isDarkMode ? 'border-white/20' : 'border-blue-600/70'}
@@ -116,7 +111,7 @@ const ServiceCard = ({ service, isDarkMode, isLoading }) => {
           {parse(service.description || '')}
         </div>
       </div>
-    </motion.div>
+    </Link>
   );
 };
 ServiceCard.propTypes = {

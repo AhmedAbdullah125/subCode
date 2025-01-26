@@ -113,7 +113,7 @@ export const en = {
         "Competitive prices",
       ],
       stats: {
-        label1: "Happy Clients",
+        label1: "Clients",
         label2: "Completed Projects",
         label3: "Customer Satisfaction",
         label4: "star",

@@ -5,6 +5,10 @@ import {
   Users, Clock, Star, MessageCircle, 
   CheckCircle
 } from 'lucide-react';
+import axios from 'axios';
+import { API_BASE_URL } from '../../../src/apiConfig';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const BANNER_DATA = [
   {
@@ -26,6 +30,33 @@ const BANNER_DATA = [
     subtitle: 'تحسين كامل للأداء ومحركات البحث'
   }
 ];
+const [loading, setLoading] = useState(false);
+const [data, setData] = useState([]);
+const [error, setError] = useState(null);
+const {id} = useParams();
+console.log(id);
+const [article, setArticle] = useState([]);
+const { t, i18n } = useTranslation();
+
+// useEffect(() => {
+//   const fetchProjects = async () => {
+//     try {
+//       setLoading(true);
+//       const { data } = await axios.get(`${API_BASE_URL}/service/${id}`, {
+//         headers: { 'Accept-Language': i18n.language }
+//       });
+//       setArticle(data.data);
+//       setLoading(false);
+//     } catch (error) {
+//       console.error('Error fetching projects:', error);
+//       setLoading(false);
+//     }
+//   };
+
+//   fetchProjects();
+// }, [i18n.language]);
+
+// console.log(article);
 
 const SERVICE_DATA = {
   title: 'تطوير المواقع الإلكترونية',
