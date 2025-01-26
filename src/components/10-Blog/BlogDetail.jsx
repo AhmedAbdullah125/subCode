@@ -73,7 +73,8 @@ const BlogDetail = () => {
     fetchProjects();
   }, [i18n.language]);
 
-
+  console.log(article);
+  
 
 
   return (
@@ -177,7 +178,7 @@ const BlogDetail = () => {
                 >
                   <h2 className='text-3xl font-bold mb-6'>{article.title}</h2>
                   <div className={`prose prose-lg max-w-none ${isDarkMode ? 'prose-invert' : ''}`}>
-                    {article.description)}
+                    {parse(article.description)}
                   </div>
 
                   <div className="flex flex-wrap gap-2 mt-8">
