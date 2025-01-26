@@ -142,7 +142,7 @@ const About = () => {
                         {inView && ( <CountUp  start={0}  end={parseInt(stat.number)} duration={4} suffix={stat.suffix}  /> )}
                       </div>
                       <div className={` text-sm text-center  ${isDarkMode ? 'text-gray-400' : 'text-gray-600'} `}>
-                        {stat.tet}
+                        {stat.text}
                       </div>
                     </motion.div>
                   );
