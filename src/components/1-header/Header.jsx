@@ -66,7 +66,7 @@ const MENU_ITEMS = [
   //   ],
   // },
   { name: "gallery", href: "/Gallery" },
-  { name: "services", href: "#services" },
+  { name: "services", href: "/all-services" },
   { name: "blog", href: "#latestarticles" },
   { name: "about", href: "#about" },
   { name: "contact", href: "#contact" },
@@ -79,7 +79,7 @@ export function Header() {
   const menuRef = useRef(null);
   const { isDarkMode, toggleTheme } = useTheme();
   const { i18n, t } = useTranslation();
-  
+
   const [state, setState] = useState({
     isMenuOpen: false,
     scrolled: false,
@@ -106,18 +106,18 @@ export function Header() {
       '/blog',
       '/blog/', // Add trailing slash version
       '/blog/*', // This will match all blog detail pages
-      '/Gallery', 
-      '/all-services', 
-      '/services/web', 
-      '/services/mobile', 
-      '/services/custom', 
-      '/services/ui', 
-      '/services/ai', 
-      '/services/marketing', 
+      '/Gallery',
+      '/all-services',
+      '/services/web',
+      '/services/mobile',
+      '/services/custom',
+      '/services/ui',
+      '/services/ai',
+      '/services/marketing',
       '/services/website-management',
     ];
-  
-    return !nonTransparentPaths.some(path => 
+
+    return !nonTransparentPaths.some(path =>
       window.location.pathname.startsWith(path)
     );
   }, []);
@@ -143,7 +143,7 @@ export function Header() {
   // Enhanced section observer
   useEffect(() => {
     const sectionIds = ["home", "services", "about", "contact"];
-    
+
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting && !state.isNavigating) {
@@ -205,14 +205,14 @@ export function Header() {
     const duration = 1000;
     const startTime = performance.now();
 
-    const easeInOutCubic = (t) => 
+    const easeInOutCubic = (t) =>
       t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
 
     const animateScroll = (currentTime) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = easeInOutCubic(progress);
-      
+
       window.scrollTo(0, start + (end - start) * eased);
 
       if (progress < 1) {
@@ -229,7 +229,7 @@ export function Header() {
   // Navigation handler
   const handleNavigation = async (href, e) => {
     e.preventDefault();
-    
+
     setState(prev => ({ ...prev, isLoading: true }));
     const headerOffset = headerRef.current?.offsetHeight || 0;
 
@@ -259,20 +259,20 @@ export function Header() {
   useEffect(() => {
     if (location.state?.targetSection) {
       const headerOffset = headerRef.current?.offsetHeight || 0;
-      
+
       navigationTimeoutRef.current = setTimeout(async () => {
         const success = await scrollToSection(
           `#${location.state.targetSection}`,
           headerOffset
         );
-        
+
         if (success) {
           navigate(location.pathname, {
             replace: true,
             state: {},
           });
         }
-        
+
         setState(prev => ({ ...prev, isLoading: false }));
       }, 150);
     } else {
@@ -311,46 +311,46 @@ export function Header() {
 
 
 
- // Render methods
-const renderThemeToggle = () => (
-  <motion.button
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-    onClick={toggleTheme}
-    className={`
+  // Render methods
+  const renderThemeToggle = () => (
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={toggleTheme}
+      className={`
       flex items-center gap-1 px-3 py-2 text-xs
       ${isDarkMode
-        ? "bg-gray-800 hover:bg-gray-700 text-gray-200"
-        : "bg-gray-200 hover:bg-gray-300 text-gray-800"
-      }
+          ? "bg-gray-800 hover:bg-gray-700 text-gray-200"
+          : "bg-gray-200 hover:bg-gray-300 text-gray-800"
+        }
       rounded-xl transition-all duration-300
     `}
-    aria-label="Toggle theme"
-  >
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={isDarkMode ? "dark" : "light"}
-        initial={{ y: 10, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: -10, opacity: 0 }}
-        transition={{ duration: 0.2 }}
-      >
-        {isDarkMode ? (
-          <Sun className="w-3 h-3 text-yellow-400" />
-        ) : (
-          <Moon className="w-3 h-3 text-purple-700" />
-        )}
-      </motion.div>
-    </AnimatePresence>
-  </motion.button>
-);
+      aria-label="Toggle theme"
+    >
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={isDarkMode ? "dark" : "light"}
+          initial={{ y: 10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -10, opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          {isDarkMode ? (
+            <Sun className="w-3 h-3 text-yellow-400" />
+          ) : (
+            <Moon className="w-3 h-3 text-purple-700" />
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </motion.button>
+  );
 
-const renderServiceButton = (isMobile = false) => (
-  <div className={`flex ${isMobile ? "w-full justify-center" : ""}`}>
-    <motion.button
-      whileHover={{ scale: 1.01 }}
-      whileTap={{ scale: 0.99 }}
-      className={`
+  const renderServiceButton = (isMobile = false) => (
+    <div className={`flex ${isMobile ? "w-full justify-center" : ""}`}>
+      <motion.button
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
+        className={`
         group flex items-center gap-2 
         ${isMobile ? "px-4 py-2 " : "px-5 py-2 text-sm"}
         text-white font-medium
@@ -359,238 +359,234 @@ const renderServiceButton = (isMobile = false) => (
         relative overflow-hidden shadow-lg hover:shadow-xl
         whitespace-nowrap
       `}
-    >
-      <span className="absolute inset-0 bg-white/20 transform -skew-x-12 translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
-      <ShoppingBag className={`${isMobile ? "w-5 h-5" : "w-4 h-4"} relative z-10`} />
-      <span className="relative z-10">{t("common.requestService")}</span>
-    </motion.button>
-  </div>
-);
+      >
+        <span className="absolute inset-0 bg-white/20 transform -skew-x-12 translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
+        <ShoppingBag className={`${isMobile ? "w-5 h-5" : "w-4 h-4"} relative z-10`} />
+        <span className="relative z-10">{t("common.requestService")}</span>
+      </motion.button>
+    </div>
+  );
 
-const renderMenuItem = (item, isMobile = false) => {
-  const isHomePage = location.pathname === '/';
-  const isActive = item.href.startsWith('#')
-    ? isHomePage && state.activeSection === item.href.slice(1)
-    : location.pathname === item.href;
+  const renderMenuItem = (item, isMobile = false) => {
+    const isHomePage = location.pathname === '/';
+    const isActive = item.href.startsWith('#')
+      ? isHomePage && state.activeSection === item.href.slice(1)
+      : location.pathname === item.href;
 
-  return (
-    <motion.li
-      key={item.name}
-      className="relative group w-full"
-    >
-      <Link
-        to={item.href}
-        onClick={(e) => {
-          if (item.subItems) {
-            handleSubmenuToggle(item.name, e);
-          } else {
-            handleNavigation(item.href, e);
-          }
-        }}
-        className={`
+    return (
+      <motion.li
+        key={item.name}
+        className="relative group w-full"
+      >
+        <Link
+          to={item.href}
+          onClick={(e) => {
+            if (item.subItems) {
+              handleSubmenuToggle(item.name, e);
+            } else {
+              handleNavigation(item.href, e);
+            }
+          }}
+          className={`
           block text-center whitespace-nowrap px-2 py-1 relative
-          ${isDarkMode 
-            ? 'text-gray-200 hover:text-sky-400' 
-            : 'text-gray-700 hover:text-blue-600'}
+          ${isDarkMode
+              ? 'text-gray-200 hover:text-sky-400'
+              : 'text-gray-700 hover:text-blue-600'}
           rounded-lg transition-all duration-300
           ${isActive ? isDarkMode ? 'text-sky-400 bg-sky-400/10' : 'text-blue-600 bg-blue-500/40' : ''}
           hover:bg-gradient-to-r 
-          ${isDarkMode 
-            ? 'hover:from-sky-400/10 hover:to-sky-500/5' 
-            : 'hover:from-blue-50/50 hover:to-blue-100/30'}
+          ${isDarkMode
+              ? 'hover:from-sky-400/10 hover:to-sky-500/5'
+              : 'hover:from-blue-50/50 hover:to-blue-100/30'}
           ${fontClass}
           group transform hover:-translate-y-0.5 text-sm
         `}
-      >
-        <div className="flex items-center justify-center gap-1">
-          <span>{t(`navigation.${item.name}`)}</span>
-          {item.subItems && (
-            <ChevronDown 
-              className={`w-3.5 h-3.5 transition-transform duration-300 
+        >
+          <div className="flex items-center justify-center gap-1">
+            <span>{t(`navigation.${item.name}`)}</span>
+            {item.subItems && (
+              <ChevronDown
+                className={`w-3.5 h-3.5 transition-transform duration-300 
               ${state.activeSubmenu === item.name ? 'rotate-180' : ''}
-              ${isDarkMode ? 'text-sky-400' : 'text-blue-600'}`} 
-            />
-          )}
-        </div>
-        
-        <div className={`
+              ${isDarkMode ? 'text-sky-400' : 'text-blue-600'}`}
+              />
+            )}
+          </div>
+
+          <div className={`
           absolute bottom-0 left-1 right-1 h-0.5
-          ${isDarkMode 
-            ? 'bg-sky-400' 
-            : 'bg-blue-500'}
+          ${isDarkMode
+              ? 'bg-sky-400'
+              : 'bg-blue-500'}
           transform origin-left transition-all duration-300
           ${isActive ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'}
           group-hover:scale-x-100 group-hover:opacity-100
           rounded-lg
         `} />
-      </Link>
+        </Link>
 
-      {item.subItems && state.activeSubmenu === item.name && (
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 10 }}
-          transition={{ duration: 0.2 }}
-          className={`
-            ${isMobile 
-              ? 'mt-2 w-64 p-2' 
-              : 'absolute left-0 mt-2 w-64 p-2'}
-            ${isDarkMode 
-              ? 'bg-gray-900/95 border border-sky-400/20 shadow-lg shadow-sky-400/10' 
-              : 'bg-white/95 border border-blue-100 shadow-lg shadow-blue-100/20'}
+        {item.subItems && state.activeSubmenu === item.name && (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className={`
+            ${isMobile
+                ? 'mt-2 w-64 p-2'
+                : 'absolute left-0 mt-2 w-64 p-2'}
+            ${isDarkMode
+                ? 'bg-gray-900/95 border border-sky-400/20 shadow-lg shadow-sky-400/10'
+                : 'bg-white/95 border border-blue-100 shadow-lg shadow-blue-100/20'}
             rounded-xl z-50 backdrop-blur-sm
           `}
-        >
-          {item.subItems.map((subItem) => {
-            const isSubItemActive = location.pathname === subItem.href;
-            
-            return (
-              <motion.div
-                key={subItem.name}
-                whileHover={{ scale: 1.02, x: 3, y:-1 }}
-              >
-                <Link
-                  to={subItem.href}
-                  onClick={(e) => handleNavigation(subItem.href, e)}
-                  className={`
+          >
+            {item.subItems.map((subItem) => {
+              const isSubItemActive = location.pathname === subItem.href;
+
+              return (
+                <motion.div
+                  key={subItem.name}
+                  whileHover={{ scale: 1.02, x: 3, y: -1 }}
+                >
+                  <Link
+                    to={subItem.href}
+                    onClick={(e) => handleNavigation(subItem.href, e)}
+                    className={`
                     flex items-center gap-3 px-4 py-2 rounded-lg
-                    ${isDarkMode 
-                      ? `text-gray-200 hover:text-sky-400 hover:bg-sky-400/10 
-                         ${isSubItemActive ? 'text-sky-400 bg-sky-400/10' : ''}` 
-                      : `text-gray-700 hover:text-blue-600 hover:bg-blue-50/50
+                    ${isDarkMode
+                        ? `text-gray-200 hover:text-sky-400 hover:bg-sky-400/10 
+                         ${isSubItemActive ? 'text-sky-400 bg-sky-400/10' : ''}`
+                        : `text-gray-700 hover:text-blue-600 hover:bg-blue-50/50
                          ${isSubItemActive ? 'text-blue-600 bg-blue-50' : ''}`}
                     transition-all duration-300 ${fontClass}
                   `}
-                >
-                  <span className={`
+                  >
+                    <span className={`
                     transition-colors duration-300
-                    ${isSubItemActive 
-                      ? isDarkMode ? 'text-white' : 'text-blue-600'
-                      : 'text-sky-500'}
+                    ${isSubItemActive
+                        ? isDarkMode ? 'text-white' : 'text-blue-600'
+                        : 'text-sky-500'}
                   `}>
-                    {subItem.icon}
-                  </span>
-                  <span>{t(`services.${subItem.name}.title`)}</span>
-                </Link>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      )}
-    </motion.li>
-  );
-};
+                      {subItem.icon}
+                    </span>
+                    <span>{t(`services.${subItem.name}.title`)}</span>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        )}
+      </motion.li>
+    );
+  };
 
-// Main content for the header
-return (
-  <>
+  // Main content for the header
+  return (
+    <>
 
-    <header
-      ref={headerRef}
-      className={`
-        fixed top-0 w-full z-40
-        ${state.scrolled || state.isMenuOpen || !shouldShowTransparentHeader()
-          ? isDarkMode
-            ? "bg-gray-900/95 shadow-lg backdrop-blur-lg border-b border-gray-800"
-            : "bg-white/95 shadow-sm backdrop-blur-lg border-b border-gray-200"
-          : "bg-transparent"
+      <header
+        ref={headerRef}
+        className={` fixed top-0 w-full z-40 ${isDarkMode ? "bg-gray-900/30 shadow-lg backdrop-blur-lg border-b border-gray-800"
+          : "bg-white/30 shadow-sm backdrop-blur-lg border-b border-gray-200"}
+
         }
        
         ${fontClass}
       `}
-    >
-      <div className="container mx-auto flex-shrink-0 px-4">
-        <div className="flex items-center justify-between h-20 py-2">
-          <Logo />
+      >
+        <div className="container mx-auto flex-shrink-0 px-4">
+          <div className="flex items-center justify-between h-20 py-2">
+            <Logo />
 
-          <nav className="hidden cursor-pointer lg:block">
-            <ul className="flex items-center justify-center gap-8">
-              {MENU_ITEMS.map((item) => renderMenuItem(item))}
-            </ul>
-          </nav>
+            <nav className="hidden cursor-pointer lg:block">
+              <ul className="flex items-center justify-center gap-8">
+                {MENU_ITEMS.map((item) => renderMenuItem(item))}
+              </ul>
+            </nav>
 
-          <div className="flex items-center gap-3">
-            {renderThemeToggle()}
+            <div className="flex items-center gap-3">
+              {renderThemeToggle()}
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={toggleLanguage}
-              className={`
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={toggleLanguage}
+                className={`
                 inline-flex cairo font-bold
                 flex cursor-pointer content-center items-center justify-center gap-1 px-2 py-2 text-xs
                 ${isDarkMode
-                  ? "bg-gray-800 hover:bg-gray-700 text-gray-200"
-                  : "bg-gray-200 hover:bg-gray-300 text-gray-800"
-                }
+                    ? "bg-gray-800 hover:bg-gray-700 text-gray-200"
+                    : "bg-gray-200 hover:bg-gray-300 text-gray-800"
+                  }
                 rounded-xl transition-all duration-300 ${fontClass}
               `}
-            >
-              <Globe size={12}  />
-              <span>{i18n.language === "ar" ? "EN" : "AR"}</span>
-            </motion.button>
+              >
+                <Globe size={12} />
+                <span>{i18n.language === "ar" ? "EN" : "AR"}</span>
+              </motion.button>
 
-            <div className="hidden xl:block">{renderServiceButton()}</div>
+              <div className="hidden xl:block">{renderServiceButton()}</div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleMenuToggle}
-              className={`
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleMenuToggle}
+                className={`
                 lg:hidden p-1 rounded-xl
                 ${isDarkMode
-                  ? "bg-gray-800 hover:bg-gray-700 text-gray-200"
-                  : "bg-gray-200 hover:bg-gray-200 text-gray-800"
-                }
+                    ? "bg-gray-800 hover:bg-gray-700 text-gray-200"
+                    : "bg-gray-200 hover:bg-gray-200 text-gray-800"
+                  }
                 transition-all duration-300
               `}
-            >
-              <Menu className="w-6 h-6" />
-            </motion.button>
+              >
+                <Menu className="w-6 h-6" />
+              </motion.button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <AnimatePresence>
-        {state.isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.1 }}
-            className={`
+        <AnimatePresence>
+          {state.isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.1 }}
+              className={`
               lg:hidden fixed top-20 left-0 right-0 z-50
               ${isDarkMode
-                ? "bg-gray-900 border-t border-b border-gray-800"
-                : "bg-white border-t border-b border-gray-200"
-              }
+                  ? "bg-gray-900 border-t border-b border-gray-800"
+                  : "bg-white border-t border-b border-gray-200"
+                }
               shadow-lg
             `}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="container mx-auto flex flex-col gap-3 items-center px-4 py-4">
-              <nav>
-                <motion.ul
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    visible: {
-                      transition: {
-                        staggerChildren: 0.1,
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="container mx-auto flex flex-col gap-3 items-center px-4 py-4">
+                <nav>
+                  <motion.ul
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      visible: {
+                        transition: {
+                          staggerChildren: 0.1,
+                        },
                       },
-                    },
-                  }}
-                  className="flex flex-col space-y-3"
-                >
-                  {MENU_ITEMS.map((item) => renderMenuItem(item, true))}
-                </motion.ul>
-              </nav>
-              {renderServiceButton(true)}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
-  </>
-);
+                    }}
+                    className="flex flex-col space-y-3"
+                  >
+                    {MENU_ITEMS.map((item) => renderMenuItem(item, true))}
+                  </motion.ul>
+                </nav>
+                {renderServiceButton(true)}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+    </>
+  );
 };

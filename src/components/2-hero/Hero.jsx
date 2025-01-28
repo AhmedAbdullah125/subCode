@@ -137,7 +137,7 @@ function HeroSection() {
 
 
   return (
-    <section id='home' ref={sectionRef} className="h-full  md:h-screen w-full relative overflow-hidden flex items-center justify-center">
+    <section id='home' ref={sectionRef} className="h-full  md:h-screen pt-32 w-full relative overflow-hidden flex items-center justify-center">
       <BackgroundEffects />
 
       <motion.div

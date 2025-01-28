@@ -159,17 +159,12 @@ const ServiceDetails = () => {
                 {data?.sliders.map((slide, index) =>
                   <SwiperSlide key={index}>
                     
-                      <div key={index} className="min-w-full h-full relative">
+                      <div key={index} className="w-full h-screen relative">
                         <img src={slide}  alt={"Subcode"}  className="w-full h-full object-cover" />
-                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                          <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="text-center text-white space-y-6"
-                          >
+                        <div className="absolute inset-0 bg-black/50 text-white space-y-6 flex flex-col items-center justify-center">
+                       
                              <h1 className="text-5xl md:text-6xl font-bold">{data.title}</h1>
                              { parse(data.description) }
-                          </motion.div>
                         </div>
                       </div>
                   </SwiperSlide>

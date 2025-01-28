@@ -84,7 +84,7 @@ const BlogDetail = () => {
         loading ? <CardSkeleton count={5} /> :
           <div className={`min-h-screen font-cairo  ${isDarkMode ? 'bg-gray-950 text-gray-100' : 'bg-gray-50 text-gray-900'}`}>
             <div className="container m-auto mt-32 rounded-5xl overflow-hidden">
-            <motion.div className="relative w-full aspect-[1280/650] overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <motion.div className="relative w-full aspect-[1280/550] overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <motion.img
                 src={article.image}
                 alt={article.title}
@@ -93,7 +93,6 @@ const BlogDetail = () => {
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.8 }}
               />
-              <div className={`absolute hover:opacity-0 transition-all  inset-0 ${isDarkMode ? 'bg-black/60' : 'bg-black/40'}`} />
 
               {/* <div className="absolute inset-0 flex items-center">
                 <div className="container mx-auto px-4">

@@ -31,34 +31,19 @@ const AllServices = () => {
   return (
     <div className={`relative font-cairo mt-20 min-h-screen ${isDarkMode ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-black' : 'bg-white'}`}>
       {/* Header Section */}
-      <div className={`w-full py-20 ${isDarkMode ? 'bg-gray-900/50' : 'bg-gray-50'}`}>
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <h1 className="text-blue-600 text-5xl md:text-6xl font-bold mb-6">
-              {t('services.allServices')}
-            </h1>
-            
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: '6rem' }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="h-1 bg-blue-600 mx-auto mb-8 rounded-full"
-            />
+      {/* <div className={`w-full container mx-auto px-4 py-20 ${isDarkMode ? 'bg-gray-900/50' : 'bg-gray-50'}`}>
+        <h1 className="text-blue-600 text-5xl md:text-6xl font-bold mb-6">
+          {t('services.allServices')}
+        </h1>
 
-            <p className={`
+        <p className={`
               ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}
               text-lg max-w-3xl mx-auto leading-relaxed
             `}>
-              {t('services.exploreDescription')}
-            </p>
-          </motion.div>
-        </div>
-      </div>
+          {t('services.exploreDescription')}
+        </p>
+
+      </div> */}
 
       {/* Services Grid */}
       <section className="container mx-auto px-4 py-20">
@@ -68,16 +53,7 @@ const AllServices = () => {
           transition={{ duration: 0.5 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {loading ? (
-            // Loading state
-            [...Array(6)].map((_, index) => (
-              <ServiceCard
-                key={index}
-                isDarkMode={isDarkMode}
-                isLoading={true}
-              />
-            ))
-          ) : (
+          {loading ? null : (
             // Loaded services
             services.map((service, index) => (
               <motion.div
