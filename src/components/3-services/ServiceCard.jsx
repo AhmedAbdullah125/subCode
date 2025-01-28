@@ -49,7 +49,7 @@ const ServiceCard = ({ service, isDarkMode, isLoading }) => {
     <Link to={`/services/${service.slug}`}
       className={`
         relative rounded-xl backdrop-blur-lg border cursor-pointer
-        ${isDarkMode ? 'border-white/20' : 'border-blue-600/70'}
+        ${isDarkMode ? 'border-white/20' : 'border-black/10 border-solid'}
         group hover:shadow-2xl hover:shadow-blue-500/10 
         transition-all duration-500 hover:-translate-y-1
       `}

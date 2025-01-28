@@ -99,7 +99,7 @@ const HeroContent = memo(function HeroContent( ) {
   return (
     <>
       {
-        loading ? "loading..."
+        loading ?null
           :
           <LazyMotion features={domAnimation}>
             <AnimatePresence>

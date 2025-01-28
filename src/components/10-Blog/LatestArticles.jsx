@@ -8,6 +8,7 @@ import { articles } from './BlogData';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../src/apiConfig';
+import CardSkeleton from './CardSkeleton';
 
 
 
@@ -69,7 +70,7 @@ const LatestArticles = () => {
       {/* Background Gradient */}
       <div className={`absolute inset-0 bg-gradient-to-br ${isDarkMode ? 'from-gray-950 via-gray-900 to-gray-950 opacity-50' : 'from-gray-50 via-white to-gray-50 opacity-70'}`} />
       {
-        isLoading ? "loading..."
+        isLoading ? <CardSkeleton count={3} />
           :
           <div className="relative container mx-auto px-4">
             {/* Section Header */}

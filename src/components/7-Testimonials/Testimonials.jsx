@@ -182,7 +182,7 @@ const Testimonials = () => {
                 modules={[Autoplay, Navigation, Pagination]}
                 breakpoints={{
                   1400: {
-                    slidesPerView: 2,
+                    slidesPerView: 3,
                   },
                   1100: {
                     slidesPerView: 2,

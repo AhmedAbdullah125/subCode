@@ -119,7 +119,7 @@ const ServiceDetails = () => {
   return (
     <>
       {
-        loading ? "loading..." :
+        loading ? null :
           <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
             {/* Banner Slider */}
             <div className="relative h-screen overflow-hidden">

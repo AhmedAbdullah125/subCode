@@ -12,7 +12,6 @@ export function Logo() {
   const navigate = useNavigate();
   const { i18n } = useTranslation();
   const isArabic = i18n.language === 'ar';
-
   const [logoData, setLogoData] = useState({
     loading: true,
     image: null
@@ -34,25 +33,30 @@ export function Logo() {
         const response = await axios.get(`${API_BASE_URL}/header`, {
           headers: { 'Accept-Language': i18n.language }
         });
-        setLogoData({
-          loading: false,
-          image: response.data.data?.logo
-        });
+        isDarkMode ?
+          setLogoData({
+            loading: false,
+            image: response.data.data?.logo
+          }) :
+          setLogoData({
+            loading: false,
+            image: response.data.data?.lightLogo
+          })
       } catch (error) {
         console.error('Logo fetch error:', error);
         setLogoData(prev => ({ ...prev, loading: false }));
       }
     };
     fetchLogo();
-  }, [i18n.language]);
+  }, [i18n.language , isDarkMode]);
 
   const imageVariants = {
-    hidden: { 
+    hidden: {
       opacity: 0,
       x: isArabic ? 30 : -30,
       scale: 0.8
     },
-    visible: { 
+    visible: {
       opacity: 1,
       x: 0,
       scale: 1,
@@ -67,7 +71,7 @@ export function Logo() {
       filter: isDarkMode ? 'brightness(1.2) drop-shadow(4px 3px 4px rgba(221, 229, 255, 0.7))' : 'drop-shadow(1px 3px 2px rgb(24, 38, 105))',
       transition: { duration: 0.3 }
     },
-    tap: { 
+    tap: {
       scale: 0.95,
       transition: { duration: 0.1 }
     }
@@ -87,8 +91,8 @@ export function Logo() {
 
   return (
     <div onClick={handleLogoClick} className="outline-none">
-      <motion.div 
-        className="relative w-full max-w-[300px] h-[80px] flex items-center justify-center cursor-pointer"
+      <motion.div
+        className="relative w-full max-w-[300px] py-1 h-20 flex items-center justify-center cursor-pointer"
         initial="hidden"
         animate="visible"
         whileHover="hover"
@@ -96,9 +100,8 @@ export function Logo() {
       >
         {logoData.loading ? (
           <motion.div
-            className={`h-32 w-48 rounded-lg bg-gradient-to-r ${
-              isDarkMode ? 'from-blue-600/30 to-blue-400/30' : 'from-blue-200 to-blue-300'
-            }`}
+            className={`h-32 w-48 rounded-lg bg-gradient-to-r ${isDarkMode ? 'from-blue-600/30 to-blue-400/30' : 'from-blue-200 to-blue-300'
+              }`}
             variants={loadingVariants}
             animate="animate"
           />
@@ -106,7 +109,7 @@ export function Logo() {
           <motion.img
             src={logoData.image}
             alt="Logo"
-            className="h-32 w-auto object-contain"
+            className="h-full w-auto object-contain rounded-lg"
             variants={imageVariants}
             style={{
               filter: isDarkMode ? 'brightness(1.2) drop-shadow(4px 3px 4px rgba(221, 229, 255, 0.7))' : 'drop-shadow(1px 3px 2px rgb(24, 38, 105))'
@@ -116,9 +119,8 @@ export function Logo() {
 
         {/* Glow Effect */}
         <motion.div
-          className={`absolute inset-0 rounded-3xl blur-3xl ${
-            isDarkMode ? 'bg-blue-500/30' : 'filter  hover:drop-shadow(5px 5px 3px rgb(4, 4, 5)) bg-blue-500/50'
-          }`}
+          className={`absolute inset-0 rounded-3xl blur-3xl ${isDarkMode ? 'bg-blue-500/30' : 'filter  hover:drop-shadow(5px 5px 3px rgb(4, 4, 5)) bg-blue-500/50'
+            }`}
           initial={{ opacity: .3 }}
           whileHover={{ opacity: 1, scale: 1.01 }}
           whileTap={{ opacity: 1, scale: 0.98 }}

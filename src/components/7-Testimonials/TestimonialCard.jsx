@@ -32,7 +32,7 @@ const TestimonialCard = ({ testimonial, isDarkMode = true }) => {
         className="absolute right-2 top-3 opacity-60 text-blue-400"
       />
 
-      <div className="relative p-5 h-full flex flex-col gap-5">
+      <div className="relative p-5 h-full flex flex-col gap-5 items-center">
         {/* header */}
         <div className="flex items-center gap-4">
           <motion.img
@@ -56,7 +56,7 @@ const TestimonialCard = ({ testimonial, isDarkMode = true }) => {
         </div>
 
         {/* footer */}
-        <div className={`flex justify-between pt-3 border-t ${isDarkMode ? 'border-gray-700/50' : 'border-gray-200'}`}>
+        <div className={`flex w-full justify-between pt-3 border-t ${isDarkMode ? 'border-gray-700/50' : 'border-gray-200'}`}>
           <div className="flex flex-row-reverse items-center gap-1">
             <Calendar size={14} className="text-blue-400" />
             <span className="text-xs text-gray-400">{testimonial.createdAt}</span>

@@ -47,7 +47,7 @@ export function Loading() {
             repeat: Infinity,
           }}
         >
-          Loading...
+          {null}
         </motion.p>
       </motion.div>
     </div>

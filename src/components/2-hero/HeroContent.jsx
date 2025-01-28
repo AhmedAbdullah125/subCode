@@ -99,7 +99,7 @@ const HeroContent = memo(function HeroContent( ) {
   return (
     <>
       {
-        loading ? "loading..."
+        loading ?null
           :
           <LazyMotion features={domAnimation}>
             <AnimatePresence>
@@ -119,7 +119,7 @@ const HeroContent = memo(function HeroContent( ) {
             text-center ${isRTL ? 'md:text-right' : 'md:text-left'}
             sm:pt-4 xs:pt-1
           `}>
-                  <motion.h1 variants={animations.item} className={` cairo text-5xl sm:text-6xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl
+                  <motion.h1 variants={animations.item} className={` cairo text-4xl sm:text-5xl md:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl
                 md:py-4 sm:py-2 font-bold mb-3 
                 ${isDarkMode ? 'text-white' : 'text-black'}
               `}

@@ -9,6 +9,7 @@ import ArticleCard from './ArticleCard';
 import axios from 'axios';
 import { API_BASE_URL } from '../../../src/apiConfig';
 import parse from 'html-react-parser';
+import CardSkeleton from './CardSkeleton';
 
 const BlogDetail = () => {
   const { slug } = useParams();
@@ -80,9 +81,10 @@ const BlogDetail = () => {
   return (
     <>
       {
-        loading ? "loading..." :
-          <div className={`min-h-screen font-cairo ${isDarkMode ? 'bg-gray-950 text-gray-100' : 'bg-gray-50 text-gray-900'}`}>
-            <motion.div className="relative h-[70vh] overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        loading ? <CardSkeleton count={5} /> :
+          <div className={`min-h-screen font-cairo  ${isDarkMode ? 'bg-gray-950 text-gray-100' : 'bg-gray-50 text-gray-900'}`}>
+            <div className="container m-auto mt-32 rounded-5xl overflow-hidden">
+            <motion.div className="relative w-full aspect-[1280/650] overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <motion.img
                 src={article.image}
                 alt={article.title}
@@ -91,84 +93,21 @@ const BlogDetail = () => {
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.8 }}
               />
-              <div className={`absolute inset-0 ${isDarkMode ? 'bg-black/60' : 'bg-black/40'}`} />
+              <div className={`absolute hover:opacity-0 transition-all  inset-0 ${isDarkMode ? 'bg-black/60' : 'bg-black/40'}`} />
 
-              <div className="absolute inset-0 flex items-center">
+              {/* <div className="absolute inset-0 flex items-center">
                 <div className="container mx-auto px-4">
                   <div className="max-w-4xl mx-auto text-center">
                     <h1 className="text-4xl md:text-5xl font-bold text-white mb-6"> {article.title} </h1>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </motion.div>
+            </div>
 
             <div className="container mx-auto px-4 py-12">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                {/*   <div className={`lg:col-span-3 ${isRTL ? 'order-2' : 'order-1'} lg:order-1`}>
-          <div className="sticky top-24 space-y-8">
-            <motion.div
-              initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className={`p-6 rounded-2xl ${isDarkMode ? 'bg-gray-900' : 'bg-white'} shadow-xl`}
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <img
-                  src={article.author.avatar}
-                  alt={isRTL ? article.author.name : article.author.nameEn}
-                  className="w-16 h-16 rounded-full object-cover"
-                />
-                <div>
-                  <h3 className="font-bold">
-                    {isRTL ? article.author.name : article.author.nameEn}
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    {isRTL ? article.author.role : article.author.roleEn}
-                  </p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                {isRTL ? article.author.bio : article.author.bioEn}
-              </p>
-              <div className="flex gap-4">
-                {Object.entries(article.author.social).map(([platform, url]) => (
-                  <a
-                    key={platform}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-500 hover:text-blue-500 transition-colors"
-                  >
-                    {platform === 'twitter' && <Twitter className="w-5 h-5" />}
-                    {platform === 'facebook' && <Facebook className="w-5 h-5" />}
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className={`p-6 rounded-2xl ${isDarkMode ? 'bg-gray-900' : 'bg-white'} shadow-xl`}
-            >
-              <h3 className="font-bold mb-4">{t('shareArticle')}</h3>
-              <div className="flex gap-4">
-                <button
-                  onClick={() => handleShare('twitter')}
-                  className="p-2 rounded-full bg-[#1DA1F2] text-white hover:scale-110 transition-transform"
-                >
-                  <Twitter className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => handleShare('facebook')}
-                  className="p-2 rounded-full bg-[#4267B2] text-white hover:scale-110 transition-transform"
-                >
-                  <Facebook className="w-5 h-5" />
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        </div> */}
+                
 
                 <motion.article
                   initial={{ opacity: 0 }}
@@ -176,7 +115,7 @@ const BlogDetail = () => {
                   transition={{ delay: 0.3 }}
                   className={`lg:col-span-12 ${isRTL ? 'order-1' : 'order-2'} lg:order-2`}
                 >
-                  <h2 className='text-3xl font-bold mb-6'>{article.title}</h2>
+                  <h2 className='text-3xl font-bold mb-6 text-[#3b82f6]'>{article.title}</h2>
                   <div className={`prose prose-lg max-w-none ${isDarkMode ? 'prose-invert' : ''}`}>
                     {parse(article.description)}
                   </div>

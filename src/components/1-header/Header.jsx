@@ -23,50 +23,51 @@ import { useTheme } from "../../Context/ThemeContext";
 
 const MENU_ITEMS = [
   { name: "home", href: "#home" },
-  {
-    name: "services",
-    href: "#services",
-    subItems: [
-      {
-        name: "web",
-        href: "",
-        icon: <Laptop className="w-4 h-4" />,
-      },
-      {
-        name: "mobile",
-        href: "",
-        icon: <Smartphone className="w-4 h-4" />,
-      },
-      {
-        name: "custom",
-        href: "",
-        icon: <Settings className="w-4 h-4" />,
-      },
-      { name: "ai", href: "/services/ai", icon: <Brain className="w-4 h-4" /> },
-      {
-        name: "ui",
-        href: "",
-        icon: <Palette className="w-4 h-4" />,
-      },
-      {
-        name: "marketing",
-        href: "",
-        icon: <TrendingUp className="w-4 h-4" />,
-      },
-      {
-        name: "management",
-        href: "",
-        icon: <FolderCog className="w-4 h-4" />,
-      },
-      {
-        name: "viewAll",
-        href: "/all-services",
-        icon: <Grid className="w-4 h-4" />,
-      },
-    ],
-  },
+  // {
+  //   name: "services",
+  //   href: "#services",
+  //   subItems: [
+  //     {
+  //       name: "web",
+  //       href: "",
+  //       icon: <Laptop className="w-4 h-4" />,
+  //     },
+  //     {
+  //       name: "mobile",
+  //       href: "",
+  //       icon: <Smartphone className="w-4 h-4" />,
+  //     },
+  //     {
+  //       name: "custom",
+  //       href: "",
+  //       icon: <Settings className="w-4 h-4" />,
+  //     },
+  //     { name: "ai", href: "/services/ai", icon: <Brain className="w-4 h-4" /> },
+  //     {
+  //       name: "ui",
+  //       href: "",
+  //       icon: <Palette className="w-4 h-4" />,
+  //     },
+  //     {
+  //       name: "marketing",
+  //       href: "",
+  //       icon: <TrendingUp className="w-4 h-4" />,
+  //     },
+  //     {
+  //       name: "management",
+  //       href: "",
+  //       icon: <FolderCog className="w-4 h-4" />,
+  //     },
+  //     {
+  //       name: "viewAll",
+  //       href: "/all-services",
+  //       icon: <Grid className="w-4 h-4" />,
+  //     },
+  //   ],
+  // },
   { name: "gallery", href: "/Gallery" },
-  { name: "blog", href: "/blog" },
+  { name: "services", href: "#services" },
+  { name: "blog", href: "#latestarticles" },
   { name: "about", href: "#about" },
   { name: "contact", href: "#contact" },
 ];
@@ -499,7 +500,7 @@ return (
       `}
     >
       <div className="container mx-auto flex-shrink-0 px-4">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20 py-2">
           <Logo />
 
           <nav className="hidden cursor-pointer lg:block">

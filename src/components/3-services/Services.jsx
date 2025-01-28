@@ -36,7 +36,7 @@ const Services = () => {
         <CornerLights />
       </div>
 
-      <div className="relative container mx-auto px-4 mt-2 z-20">
+      <div className="relative container mx-auto px-4 mt-2 z-20" id="services">
         <AnimatePresence>
           <motion.div {...animations.fadeInUp} className="text-center mb-12">
             <h2 className={`text-3xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>

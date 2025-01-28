@@ -12,6 +12,7 @@ import axios from 'axios';
 function HeroSection() {
   const { t } = useTranslation();
   const { isDarkMode } = useTheme();
+  
   const sectionRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const { scrollYProgress } = useScroll({
@@ -136,14 +137,14 @@ function HeroSection() {
 
 
   return (
-    <section id='home' ref={sectionRef} className="h-full  md:h-screen w-full relative overflow-hidden">
+    <section id='home' ref={sectionRef} className="h-full  md:h-screen w-full relative overflow-hidden flex items-center justify-center">
       <BackgroundEffects />
 
       <motion.div
         style={{ scale, y }}
-        className="relative z-10 container mt-6   mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24"
+        className="relative z-10 container flex items-center justify-center m-auto  overflow-hidden"
       >
-        <div className="flex flex-col max-w-8xl mx-auto">
+        <div className="flex flex-col max-w-8xl mx-auto mt-20 md:mt-0">
           <div className="flex flex-col ">
             {/* Badge */}
             <motion.div

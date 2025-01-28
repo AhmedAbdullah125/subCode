@@ -44,7 +44,7 @@ const LatestWorks = () => {
   return (
     <>
       {
-        loading ? "loading..." :
+        loading ? null :
           <section
             id="latestworks"
             className={`relative  cairo py-8 overflow-hidden ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}

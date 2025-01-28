@@ -107,7 +107,7 @@ const About = () => {
         <h2 className={` text-3xl font-bold mb-4 text-center ${isDarkMode ? 'text-white' : 'text-gray-900'} `} > {t('about.title')} </h2>
         <div className="h-1 bg-blue-500 w-12 mx-auto rounded-full mb-10" />
         {
-          loading ? 'loading...' :
+          loading ? null :
             <div className="grid lg:grid-cols-2 gap-16 items-start">
               <motion.div variants={itemAnimation} className="space-y-8"  >
                 <div className={`text-center  ${isRTL ? 'lg:text-right' : 'lg:text-left'} space-y-2 `}>
@@ -118,7 +118,7 @@ const About = () => {
                 <div className="w-full flex flex-col items-center lg:items-start">
                   <div className="w-full max-w-xl grid grid-cols-1 md:grid-cols-2 gap-3">
                     {data?.features.map((feature, index) => (
-                      <div className={` w-full flex items-center gap-2 p-2 rounded-xl transition-all duration-300 ${isDarkMode ? 'bg-gray-900/50' : 'bg-gray-50/50'} `}>
+                      <div className={` w-full flex items-center gap-2 p-2 rounded-xl transition-all duration-300 ${isDarkMode ? 'bg-gray-500/20' : 'bg-gray-500/10'} `}>
                         <CheckCircle className={`w-8 h-8 text-blue-500 order-first p-2 rounded-lg ${isDarkMode ? 'bg-gray-800' : 'bg-white'} `} />
                         <span className={`text-sm font-medium ${isDarkMode ? 'text-white' : 'text-black'} ${isRTL ? 'text-right' : 'text-left'}`}>
                           {feature.text}
@@ -130,13 +130,13 @@ const About = () => {
 
               </motion.div>
 
-              <motion.div variants={itemAnimation}  className="grid grid-cols-2 gap-4" >
+              <motion.div variants={itemAnimation}  className="grid lg:grid-cols-3 grid-cols-1  gap-4" >
                 {data?.items.map((stat, index) => {
                   const Icon = stat.icon;
                   return (
-                    <motion.div key={index} variants={itemAnimation} className={` p-6 rounded-2xl ${isDarkMode ? `bg-blue-500/5  border border-blue-500` : `bg-gradient-to-br ${stat.gradient}  shadow-sm`}  ${index >= stats.length - 2 ? "col-span-1 md:col-span-1" : ""} flex flex-col items-center justify-center transition-transform duration-300 hover:scale-[1.02]`} >
-                      <div className={`  p-3 rounded-xl mb-2 sm:mb-2 md:mb-4 ${isDarkMode ? 'bg-gray-800/50' : 'bg-white/80'}`}>
-                        <img src={stat.image} alt={stat.text} className="w-20 h-20 object-cover"  />
+                    <motion.div key={index} variants={itemAnimation} className={` p-6 rounded-2xl ${isDarkMode ? `bg-blue-500/5  border border-blue-500` : `bg-slate-800/10  border border-slate-700/20 ${stat.gradient}  shadow-sm`}  ${index >= stats.length - 2 ? "col-span-1 md:col-span-1" : ""} flex flex-col items-center justify-center transition-transform duration-300 hover:scale-[1.02]`} >
+                      <div className={`p-3 rounded-full mb-2 sm:mb-2 md:mb-4 ${isDarkMode ? 'bg-gray-800/50' : 'bg-white/80'}`}>
+                        <img src={stat.image} alt={stat.text} className="w-20 h-20 object-cover rounded-full opacity-50 hover:opacity-100"  />
                       </div>
                       <div className={` text-2xl font-bold mb-2  ${isDarkMode ? 'text-white' : 'text-gray-950'}  `}>
                         {inView && ( <CountUp  start={0}  end={parseInt(stat.number)} duration={4} suffix={stat.suffix}  /> )}
