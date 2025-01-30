@@ -41,26 +41,28 @@ export const HeroSection = ({ project, currentLang, isDarkMode }) => (
       <div className="grid lg:grid-cols-2 gap-12 items-center relative">
         {/* Content Side */}
         <div className="order-2 lg:order-1 text-center lg:text-start">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className={`text-3xl sm:text-4xl md:text-5xl mb-8 leading-relaxed font-bold
+                ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
+          >
+
+            {parse(project.name)}
+
+          </motion.p>
+
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-6 
+            className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-6 
                 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}
           >
             {project.title}
           </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className={`text-base sm:text-lg md:text-xl mb-8 leading-relaxed
-                ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}
-          >
 
-            {parse(project.description)}
-
-          </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -81,13 +83,13 @@ export const HeroSection = ({ project, currentLang, isDarkMode }) => (
             </Link>
 
             <Link
-              to={'google.com'}
+              to={`https://wa.me/+905528255694?text=اريد منتج مشابه ل (${project.name})`}
               className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg 
                   flex items-center gap-2 hover:from-emerald-600 hover:to-emerald-700 transition-all
                   hover:shadow-lg hover:shadow-emerald-500/25 w-full sm:w-auto justify-center"
             >
               <ShoppingCart className="w-4 h-4" />
-              <span>{currentLang === 'ar' ? 'طلب المنتج' : 'Order Now'}</span>
+              <Link to={`https://wa.me/+905528255694?text=اريد منتج مشابه ل (${project.name})`}>{currentLang === 'ar' ? 'طلب المنتج' : 'Order Now'}</Link>
             </Link>
           </motion.div>
         </div>
@@ -365,19 +367,19 @@ export const OverviewSection = ({ project, currentLang, isDarkMode }) => (
       </div> */}
       </div>
     </div>
-      <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <Package className="w-5 h-5 text-blue-500" />
-          {currentLang === 'ar' ? 'ما تم تسليمه للعميل' : 'Client Deliverables'}
-        </h3>
-        <div className="space-y-4">
-          {project.deliverCustomer?.map((deliverable, index) => (
-            <div key={index} className="flex items-start gap-3 p-4 bg-blue-500/10 rounded-lg">
-              {parse(deliverable.text)}
-            </div>
-          ))}
-        </div>
+    <div className={`p-6 rounded-xl ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+      <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+        <Package className="w-5 h-5 text-blue-500" />
+        {currentLang === 'ar' ? 'ما تم تسليمه للعميل' : 'Client Deliverables'}
+      </h3>
+      <div className="space-y-4">
+        {project.deliverCustomer?.map((deliverable, index) => (
+          <div key={index} className="flex items-start gap-3 p-4 bg-blue-500/10 rounded-lg">
+            {parse(deliverable.text)}
+          </div>
+        ))}
       </div>
+    </div>
   </div>
 );
 

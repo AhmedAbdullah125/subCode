@@ -130,7 +130,7 @@ const About = () => {
 
               </motion.div>
 
-              <motion.div variants={itemAnimation}  className="grid lg:grid-cols-3 grid-cols-1  gap-4" >
+              <motion.div variants={itemAnimation}  className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1  gap-4" >
                 {data?.items.map((stat, index) => {
                   const Icon = stat.icon;
                   return (
