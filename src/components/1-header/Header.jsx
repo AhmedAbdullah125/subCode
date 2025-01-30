@@ -59,7 +59,7 @@ const MENU_ITEMS = [
   // },
   { name: "gallery", href: "/Gallery" },
   { name: "services", href: "/all-services" },
-  { name: "blog", href: "#latestarticles" },
+  { name: "blog", href: "/blog" },
   { name: "about", href: "#about" },
   { name: "contact", href: "#contact" },
 ];

@@ -146,7 +146,7 @@ const Testimonials = () => {
       {
         loading ? null :
           <>
-            <div className="absolute inset-0 opacity-50 w-full h-full" style={{ contain: 'layout paint size', willChange: 'transform' }}>
+            <div className="absolute inset-0 opacity-50 w-full h-full" style={{ contain: 'layout paint size', willChange: 'transform' }} id='testimonials'>
               <CornerLights />
             </div>
 

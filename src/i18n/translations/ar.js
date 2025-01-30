@@ -4,7 +4,7 @@ export const ar = {
     navigation: {
       home: "الرئيسية",
       services: "خدماتنا",
-      gallery: "المعرض ",
+      gallery: "المشاريع ",
       blog: "المدونة",
       about: "من نحن",
       contact: "تواصل معنا",

@@ -189,7 +189,7 @@ const ServiceDetails = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="text-xl text-gray-600 dark:text-gray-300 text-justify "
+                  className="md:text-xl text-base md:p-0 p-2 text-gray-600 dark:text-gray-300 text-justify "
                 >
                   {parse(data.description)}
                 </motion.p>

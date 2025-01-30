@@ -7,6 +7,7 @@ import { useFooterNavigation } from "../../hooks/useFooterNavigation";
 import { useTheme } from "../../Context/ThemeContext";
 import SocialLinks from "../shared/SocialLinks";
 import ScrollToTop from "./ScrollToTop";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   const { t, i18n } = useTranslation();
@@ -50,16 +51,16 @@ export default function Footer() {
               transition: { type: "spring", stiffness: 300 }
             }}
           >
-            <a
-              href={link.href}
-              onClick={(e) => handleLinkClick(link.href, e)}
+            <Link
+              to={link.href}
+              // onClick={(e) => handleLinkClick(link.href, e)}
               className={`group cursor-pointer flex items-center justify-center gap-2
                 ${isDarkMode ? 'text-white/90 hover:text-blue-400' : 'text-gray-600 hover:text-blue-600'}
                 transition-all duration-300 hover:scale-105`}
             >
               {Icon && <Icon className="w-4 h-4" />}
               <span className="mx-2">{t(link.title)}</span>
-            </a>
+            </Link>
           </motion.li>
         );
       })}
