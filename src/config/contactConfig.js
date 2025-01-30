@@ -9,8 +9,8 @@ export const contactInfo = [
   {
     icon: 'Mail',
     color: "blue", 
-    text: "contact@subcode.com",
-    link: "mailto:contact@subcode.com",
+    text: "info@subcodeco.com",
+    link: "mailto:info@subcodeco.com",
     subtextKey: "contact.quickResponse"
   },
   {
