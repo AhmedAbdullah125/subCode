@@ -165,7 +165,6 @@ const Gallery = () => {
                 {/* Projects Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
 
-                  <div className="space-y-6 md:space-y-8">
                     <AnimatePresence mode="wait">
                       {data.map((project, index) => (
                         activeTab == 'all' || project.categoryId == activeTab ? (
@@ -187,7 +186,6 @@ const Gallery = () => {
                           : null
                       ))}
                     </AnimatePresence>
-                  </div>
                 </div>
               </div>
             </div>

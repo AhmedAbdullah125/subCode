@@ -122,7 +122,7 @@ const ServiceDetails = () => {
         loading ? null :
           <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
             {/* Banner Slider */}
-            <div className="relative h-screen overflow-hidden">
+            <div className="relative overflow-hidden">
 
               <Swiper
                 // navigation
@@ -158,15 +158,17 @@ const ServiceDetails = () => {
               >
                 {data?.sliders.map((slide, index) =>
                   <SwiperSlide key={index}>
-                    
-                      <div key={index} className="w-full h-screen relative">
-                        <img src={slide}  alt={"Subcode"}  className="w-full h-full object-cover" />
+
+                    <div className="container m-auto mt-32">
+                      <div key={index} className="relative w-full lg:aspect-[1280/450] aspect-[1280/650] object-top overflow-hidden rounded-5xl">
+                        <img src={slide} alt={"Subcode"} className="w-full h-full object-cover object-top" />
                         <div className="absolute inset-0 bg-black/50 text-white space-y-6 flex flex-col items-center justify-center">
-                       
-                             <h1 className="text-5xl md:text-6xl font-bold">{data.title}</h1>
-                             { parse(data.description) }
+
+                          {/* <h1 className="text-5xl md:text-6xl font-bold">{data.title}</h1> */}
+
                         </div>
                       </div>
+                    </div>
                   </SwiperSlide>
                 )}
               </Swiper>
@@ -175,7 +177,7 @@ const ServiceDetails = () => {
 
             {/* Service Content - Centered */}
             <div className="container mx-auto px-4 py-12">
-              <div className="text-center max-w-3xl mx-auto mb-16">
+              <div className="text-center mx-auto mb-16">
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -187,7 +189,7 @@ const ServiceDetails = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="text-xl text-gray-600 dark:text-gray-300"
+                  className="text-xl text-gray-600 dark:text-gray-300 text-justify "
                 >
                   {parse(data.description)}
                 </motion.p>
@@ -204,7 +206,7 @@ const ServiceDetails = () => {
                         transition={{ delay: index * 0.1 }}
                         className="p-6 rounded-xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow"
                       >
-                        <img src={feature.image} className="text-3xl mb-4 w-20 h-20 m-auto rounded-xl"/>
+                        <img src={feature.image} className="text-3xl mb-4 w-20 h-20 m-auto rounded-xl" />
                         <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
                         <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
                       </motion.div>

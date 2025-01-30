@@ -4,14 +4,6 @@ import {
   ShoppingBag,
   Globe,
   ChevronDown,
-  Laptop,
-  Smartphone,
-  Settings,
-  Brain,
-  Palette,
-  TrendingUp,
-  FolderCog,
-  Grid,
   Sun,
   Moon,
 } from "lucide-react";
@@ -487,8 +479,8 @@ export function Header() {
 
       <header
         ref={headerRef}
-        className={` fixed top-0 w-full z-40 ${isDarkMode ? "bg-gray-900/30 shadow-lg backdrop-blur-lg border-b border-gray-800"
-          : "bg-white/30 shadow-sm backdrop-blur-lg border-b border-gray-200"}
+        className={` fixed top-0 w-full z-40 ${isDarkMode ? "bg-gray-900/80 shadow-lg backdrop-blur-lg border-b border-gray-800"
+          : "bg-white/80 shadow-sm backdrop-blur-lg border-b border-gray-200"}
 
         }
        

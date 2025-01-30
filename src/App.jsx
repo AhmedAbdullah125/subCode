@@ -86,7 +86,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
             <Route path="/gallery" element={<MainLayout><Gallery /></MainLayout>} />
-            {/* <Route path="/blog" element={<MainLayout><BlogPage /></MainLayout>} /> */}
+            <Route path="/blog" element={<MainLayout><BlogPage /></MainLayout>} />
             <Route path="/blog/:slug" element={<MainLayout><BlogDetail/></MainLayout>} />
             <Route path="/project/:id" element={<MainLayout><ProjectDetails /></MainLayout>} />
             <Route path="/services/:id" element={<MainLayout><ServiceDetails /></MainLayout>} />

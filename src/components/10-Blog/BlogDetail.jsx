@@ -84,11 +84,11 @@ const BlogDetail = () => {
         loading ? <CardSkeleton count={5} /> :
           <div className={`min-h-screen font-cairo  ${isDarkMode ? 'bg-gray-950 text-gray-100' : 'bg-gray-50 text-gray-900'}`}>
             <div className="container m-auto mt-32 rounded-5xl overflow-hidden">
-            <motion.div className="relative w-full aspect-[1280/550] overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <motion.div className="relative w-full  lg:aspect-[1280/450] aspect-[1280/650] object-top overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <motion.img
                 src={article.image}
                 alt={article.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
                 initial={{ scale: 1.1 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.8 }}

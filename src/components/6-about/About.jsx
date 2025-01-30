@@ -135,8 +135,8 @@ const About = () => {
                   const Icon = stat.icon;
                   return (
                     <motion.div key={index} variants={itemAnimation} className={` p-6 rounded-2xl ${isDarkMode ? `bg-blue-500/5  border border-blue-500` : `bg-slate-800/10  border border-slate-700/20 ${stat.gradient}  shadow-sm`}  ${index >= stats.length - 2 ? "col-span-1 md:col-span-1" : ""} flex flex-col items-center justify-center transition-transform duration-300 hover:scale-[1.02]`} >
-                      <div className={`p-3 rounded-full mb-2 sm:mb-2 md:mb-4 ${isDarkMode ? 'bg-gray-800/50' : 'bg-white/80'}`}>
-                        <img src={stat.image} alt={stat.text} className="w-20 h-20 object-cover rounded-full opacity-50 hover:opacity-100"  />
+                      <div className={`p-3 rounded-full mb-2 shrink-0 sm:mb-2 md:mb-4  ${isDarkMode ? 'bg-gray-800/50' : 'bg-white/80'}`}>
+                        <img src={stat.image} alt={stat.text} className="w-full aspect-square object-cover rounded-full"  />
                       </div>
                       <div className={` text-2xl font-bold mb-2  ${isDarkMode ? 'text-white' : 'text-gray-950'}  `}>
                         {inView && ( <CountUp  start={0}  end={parseInt(stat.number)} duration={4} suffix={stat.suffix}  /> )}

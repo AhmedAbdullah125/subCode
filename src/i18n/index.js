@@ -4,7 +4,7 @@ import { en } from './translations/en';
 import { ar } from './translations/ar';
 
 // استرجاع اللغة المخزنة أو ضبط اللغة الافتراضية كالعربية
-const savedLanguage = localStorage.getItem('language') || 'en';
+const savedLanguage = localStorage.getItem('language') || 'ar';
 
 i18n
   .use(initReactI18next)
@@ -14,7 +14,7 @@ i18n
       ar,
     },
     lng: savedLanguage, // استخدم اللغة المخزنة أو العربية كافتراضية
-    fallbackLng: 'en', // اللغة الافتراضية في حال حدوث خطأ
+    fallbackLng: 'ar', // اللغة الافتراضية في حال حدوث خطأ
     interpolation: {
       escapeValue: false,
     },

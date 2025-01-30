@@ -12,6 +12,9 @@ export function ThemeProvider({ children }) {
     if (savedTheme) {
       return JSON.parse(savedTheme);
     }
+    else {
+      return false;
+    }
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
@@ -30,11 +33,7 @@ export function ThemeProvider({ children }) {
     setIsDarkMode(prev => !prev);
   }, []);
 
-  const value = {
-    isDarkMode,
-    toggleTheme
-  };
-
+  const value = {  isDarkMode, toggleTheme};
   return (
     <ThemeContext.Provider value={value}>
       {children}

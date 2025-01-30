@@ -110,7 +110,7 @@ const LatestArticles = () => {
               className="text-center"
             >
               <Link
-                to="/blog?id=1"
+                to="/blog"
                 className="group inline-flex items-center gap-3 px-6 py-3 rounded-xl font-medium text-white
               bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600
               shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
